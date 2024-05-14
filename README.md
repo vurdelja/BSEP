@@ -6,7 +6,7 @@ Katarina Vurdelja RA 197/2020
 
 Podela funkcionalnosti za drugu kontrolnu tacku:
 
-3.1 Registracija korisnika (klijenta) *Lidija
+3.1 Registracija korisnika (klijenta) *Nina //odradjeno
 
 3.2 Potvrda registracije klijenta *Lidija
 
