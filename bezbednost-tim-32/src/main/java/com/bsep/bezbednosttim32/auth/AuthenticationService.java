@@ -4,7 +4,6 @@ import com.bsep.bezbednosttim32.config.JwtService;
 import com.bsep.bezbednosttim32.model.Role;
 import com.bsep.bezbednosttim32.model.User;
 import com.bsep.bezbednosttim32.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,17 +19,26 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+
+        System.out.println("RegisterRequest: " + request);
+
         var user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
+                .address(request.getAddress())
+                .city(request.getCity())
+                .country(request.getCountry())
+                .phoneNumber(request.getPhoneNumber())
+                .userType(request.getUserType())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .companyName(request.getCompanyName())
+                .pib(request.getPib())
                 .build();
         repository.save(user);
-        var jwtToken =jwtService.generateToken(user);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .message("User registered successfully")
                 .build();
     }
 
@@ -43,6 +51,19 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
+        var jwtToken =jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
+    }
+
+    public AuthenticationResponse login(LogInRequest request) {
+        var user = User.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.USER)
+                .build();
+        repository.save(user);
         var jwtToken =jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

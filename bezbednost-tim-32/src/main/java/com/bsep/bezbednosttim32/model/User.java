@@ -25,15 +25,15 @@ public class User implements UserDetails {
 
     private String email;
     private String password;
-    private String firstName;
-    private String lastName;
     private String address;
     private String city;
     private String country;
     private String phoneNumber;
     private UserType userType;
-    private String companyName; // For legal entities
-    private String PIB; // PIB for legal entities
+    private String firstName; // individual
+    private String lastName; //individual
+    private String companyName; // legal entities
+    private String pib; // legal entities
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -74,7 +74,3 @@ public class User implements UserDetails {
     }
 }
 
-enum UserType {
-    INDIVIDUAL,
-    LEGAL_ENTITY
-}
