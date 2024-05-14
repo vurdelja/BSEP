@@ -22,6 +22,13 @@ public class AuthenticationService {
 
         System.out.println("RegisterRequest: " + request);
 
+        String validationMessage = validatePassword(request.getPassword(), request.getPasswordConfirm());
+        if (validationMessage != null) {
+            return AuthenticationResponse.builder()
+                    .message(validationMessage)
+                    .build();
+        }
+
         var user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
@@ -41,6 +48,22 @@ public class AuthenticationService {
                 .message("User registered successfully")
                 .build();
     }
+    private String validatePassword(String password, String passwordConfirm) {
+        if (password.length() < 8) {
+            return "Password must be at least 8 characters long";
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            return "Password must contain at least one uppercase letter";
+        }
+        if (!password.matches(".*\\d.*")) {
+            return "Password must contain at least one number";
+        }
+        if (!password.equals(passwordConfirm)) {
+            return "Passwords do not match";
+        }
+        return null; // All validations passed
+    }
+
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
