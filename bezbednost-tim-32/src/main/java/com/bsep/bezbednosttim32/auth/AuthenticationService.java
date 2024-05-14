@@ -42,6 +42,7 @@ public class AuthenticationService {
                 .lastName(request.getLastName())
                 .companyName(request.getCompanyName())
                 .pib(request.getPib())
+                .packageType(request.getPackageType())
                 .build();
         repository.save(user);
         return AuthenticationResponse.builder()

@@ -1,5 +1,6 @@
 package com.bsep.bezbednosttim32.auth;
 
+import com.bsep.bezbednosttim32.model.PackageType;
 import com.bsep.bezbednosttim32.model.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,4 +24,5 @@ public class RegisterRequest {
     private String lastName; //individual
     private String companyName; // legal entities
     private String pib;
+    private PackageType packageType;
 }
