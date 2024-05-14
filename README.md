@@ -6,17 +6,17 @@ Katarina Vurdelja RA 197/2020
 
 Podela funkcionalnosti za drugu kontrolnu tacku:
 
-3.1 Registracija korisnika (klijenta) *Nina
+3.1 Registracija korisnika (klijenta) *Lidija
 
-3.2 Potvrda registracije klijenta *Nina
+3.2 Potvrda registracije klijenta *Lidija
 
-3.3 Prijava na sistem uz pomoć lozinke *Lidija
+3.3 Prijava na sistem uz pomoć lozinke *Nina
 
-3.4 Prijava na sistem bez upotrebe lozinke *Lidija
+3.4 Prijava na sistem bez upotrebe lozinke *Nina
 
 3.7 Prikaz informacija neautentifikovanim korisnicima *Olga
 
-3.8 Osvežavanje tokena *Olga
+3.8 Osvežavanje tokena *Nina
 
 3.9 Profil zaposlenog *Lidija
 
@@ -24,7 +24,7 @@ Podela funkcionalnosti za drugu kontrolnu tacku:
 
 3.11 Profil klijenta *Nina
 
-3.12 HTTPS *Nina
+3.12 HTTPS *Olga
 
 3.13 Kontrola pristupa pomoću RBAC modela *Olga
 
