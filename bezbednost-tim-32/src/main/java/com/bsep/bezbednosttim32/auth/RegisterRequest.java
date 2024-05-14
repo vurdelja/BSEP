@@ -25,4 +25,6 @@ public class RegisterRequest {
     private String companyName; // legal entities
     private String pib;
     private PackageType packageType;
+
+
 }

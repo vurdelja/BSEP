@@ -1,5 +1,6 @@
-package com.bsep.bezbednosttim32.auth;
+package com.bsep.bezbednosttim32.controller;
 
+import com.bsep.bezbednosttim32.auth.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,6 @@ public class AuthenticationController {
     ){
         return ResponseEntity.ok(service.authenticate(request));
     }
-
 
 
     @PostMapping("/login")
