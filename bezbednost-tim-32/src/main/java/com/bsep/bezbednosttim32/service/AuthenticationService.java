@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-
+    private final EmailService emailService;
 
     public LoginResponse register(RegisterRequest request) {
         RegistrationRequest registrationRequest = new RegistrationRequest();
@@ -75,18 +76,42 @@ public class AuthenticationService {
         regRequest.setStatus(RequestStatus.APPROVED);
         requestRepository.save(regRequest);
 
+        // Create and send the approval email with an activation link
+        String activationLink = "http://yourdomain.com/activate?token=" + generateActivationToken(user);
+        String emailBody = "Dear " + user.getFirstName() + ",\n\n"
+                + "Your registration has been approved. Please click the following link to activate your account:\n"
+                + activationLink + "\n\n"
+                + "Best regards,\n"
+                + "Your Company";
+
+        emailService.sendEmail(user.getEmail(), "Registration Approved", emailBody);
+
         return LoginResponse.builder()
                 .message("User approved for registration")
                 .build();
     }
 
+    private String generateActivationToken(User user) {
+        // Generate an activation token (e.g., JWT or a unique UUID)
+        // This is a placeholder; you need to implement token generation logic
+        return UUID.randomUUID().toString();
+    }
     public void rejectRegistrationRequest(Integer requestId, String rejectionReason) {
         RegistrationRequest request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new NoSuchElementException("Registration request not found"));
 
-
         request.setStatus(RequestStatus.REJECTED);
         requestRepository.save(request);
+
+        String toEmail = request.getEmail();  // Assuming RegistrationRequest has a getEmail() method
+        String subject = "Registration Request Rejected";
+        String body = "Dear " + request.getEmail() + ",\n\n" + // Assuming RegistrationRequest has getFirstName()
+                "Your registration request has been rejected for the following reason:\n" +
+                rejectionReason + "\n\n" +
+                "Best regards,\n" +
+                "Your Company";
+
+        emailService.sendEmail(toEmail, subject, body);
     }
 
 

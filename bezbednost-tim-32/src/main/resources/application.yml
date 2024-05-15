@@ -12,7 +12,17 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        fromat_sql: true
+        format_sql: true
     database: postgresql
-    database-platfrom: org.hibernate.dialect.PostgreSQLDialect
-
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: katarina.vurdelja@gmail.com
+    password: eysnhhnaqbdpuuyx
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
