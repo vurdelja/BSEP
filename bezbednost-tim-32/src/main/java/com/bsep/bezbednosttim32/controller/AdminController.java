@@ -1,17 +1,16 @@
 package com.bsep.bezbednosttim32.controller;
 
-import com.bsep.bezbednosttim32.auth.AuthenticationResponse;
-import com.bsep.bezbednosttim32.auth.AuthenticationService;
+import com.bsep.bezbednosttim32.auth.LoginResponse;
+import com.bsep.bezbednosttim32.service.AuthenticationService;
 import com.bsep.bezbednosttim32.auth.RegisterRequest;
 import com.bsep.bezbednosttim32.model.RegistrationRequest;
 import com.bsep.bezbednosttim32.repository.RegistrationRequestRepository;
-import com.bsep.bezbednosttim32.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -28,17 +27,21 @@ public class AdminController {
     }
 
     @PostMapping("/approve-registration-request/{requestId}")
-    public ResponseEntity<AuthenticationResponse> approveRegistrationRequest(
+    public ResponseEntity<LoginResponse> approveRegistrationRequest(
             @PathVariable Integer requestId,
             @RequestBody RegisterRequest request
     ) {
-        AuthenticationResponse response = authenticationService.approveRegistrationRequest(requestId, request);
+        LoginResponse response = authenticationService.approveRegistrationRequest(requestId, request);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/reject-registration-request/{requestId}")
-    public ResponseEntity<?> rejectRegistrationRequest(@PathVariable Integer requestId) {
-        authenticationService.rejectRegistrationRequest(requestId);
-        return ResponseEntity.ok().build();
+
+    @PostMapping("/reject-registration-request/{id}")
+    public ResponseEntity<Void> rejectRegistrationRequest(
+            @PathVariable Integer id,
+            @RequestBody Map<String, String> request) {
+        String rejectionReason = request.get("reason");
+        authenticationService.rejectRegistrationRequest(id, rejectionReason);
+        return ResponseEntity.noContent().build();
     }
 }
