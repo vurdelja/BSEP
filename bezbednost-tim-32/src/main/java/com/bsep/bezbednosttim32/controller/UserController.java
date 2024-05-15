@@ -2,13 +2,11 @@ package com.bsep.bezbednosttim32.controller;
 
 import com.bsep.bezbednosttim32.auth.*;
 import com.bsep.bezbednosttim32.service.AuthenticationService;
+import com.bsep.bezbednosttim32.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -18,6 +16,7 @@ import java.util.Map;
 public class UserController {
 
     private final AuthenticationService service;
+    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<LoginResponse> register(@RequestBody RegisterRequest request) {
@@ -42,6 +41,16 @@ public class UserController {
     ) {
         String refreshToken = request.get("refreshToken");
         return ResponseEntity.ok(service.refreshAccessToken(refreshToken));
+    }
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<RegisterRequest> getUserDetails(@PathVariable Integer userId) {
+        RegisterRequest userDetailsResponse = service.getUserDetails(userId);
+        return ResponseEntity.ok(userDetailsResponse);
+    }
+    @PatchMapping("/users/{userId}")
+    public ResponseEntity<Boolean> updateUserDetails(@PathVariable Integer userId, @RequestBody RegisterRequest userUpdateRequest) {
+        boolean isUpdated = userService.updateUserDetails(userId, userUpdateRequest);
+        return ResponseEntity.ok(isUpdated);
     }
 
 

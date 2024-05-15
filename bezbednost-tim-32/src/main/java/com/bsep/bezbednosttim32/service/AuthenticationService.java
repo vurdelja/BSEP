@@ -166,6 +166,33 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Invalid refresh token");
         }
     }
+    public RegisterRequest getUserDetails(Integer userId) {
+        // Dohvati korisnika iz baze podataka na osnovu ID-a
+        User user = repository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+
+        // Kreirajte objekat UserDetailsResponse sa podacima o korisniku
+        RegisterRequest userDetailsResponse = new RegisterRequest();
+        userDetailsResponse.setId(user.getId());
+        userDetailsResponse.setEmail(user.getEmail());
+        userDetailsResponse.setPassword(user.getPassword());
+        userDetailsResponse.setPasswordConfirm(user.getPasswordConfirm());
+        userDetailsResponse.setAddress(user.getAddress());
+        userDetailsResponse.setCity(user.getCity());
+        userDetailsResponse.setCountry(user.getCountry());
+        userDetailsResponse.setPhoneNumber(user.getPhoneNumber());
+        userDetailsResponse.setUserType(user.getUserType());
+        userDetailsResponse.setFirstName(user.getFirstName());
+        userDetailsResponse.setLastName(user.getLastName());
+        userDetailsResponse.setCompanyName(user.getCompanyName());
+        userDetailsResponse.setPib(user.getPib());
+        userDetailsResponse.setPackageType(user.getPackageType());
+
+        // Postavite ostale podatke prema potrebama vaše aplikacije
+
+        return userDetailsResponse;
+    }
+
 
 
 
