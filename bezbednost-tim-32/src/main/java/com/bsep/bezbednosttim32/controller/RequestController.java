@@ -3,9 +3,11 @@ package com.bsep.bezbednosttim32.controller;
 import com.bsep.bezbednosttim32.auth.LoginResponse;
 import com.bsep.bezbednosttim32.service.AuthenticationService;
 import com.bsep.bezbednosttim32.auth.RegisterRequest;
-import com.bsep.bezbednosttim32.model.RegistrationRequest;
-import com.bsep.bezbednosttim32.repository.RegistrationRequestRepository;
+import com.bsep.bezbednosttim32.model.Request;
+import com.bsep.bezbednosttim32.repository.RequestRepository;
+import com.bsep.bezbednosttim32.service.RequestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,20 +15,16 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/bsep/request")
 @RequiredArgsConstructor
-public class AdminController {
+public class RequestController {
 
     private final AuthenticationService authenticationService;
-    private final RegistrationRequestRepository repository;
+    private final RequestService requestService;
+    private final RequestRepository repository;
 
-    @GetMapping("/registration-requests")
-    public ResponseEntity<List<RegistrationRequest>> getRegistrationRequests() {
-        List<RegistrationRequest> requests = repository.findAll();
-        return ResponseEntity.ok(requests);
-    }
 
-    @PostMapping("/approve-registration-request/{requestId}")
+    @PostMapping("/approve/{requestId}")
     public ResponseEntity<LoginResponse> approveRegistrationRequest(
             @PathVariable Integer requestId,
             @RequestBody RegisterRequest request
@@ -36,7 +34,7 @@ public class AdminController {
     }
 
 
-    @PostMapping("/reject-registration-request/{id}")
+    @PostMapping("/reject/{id}")
     public ResponseEntity<Void> rejectRegistrationRequest(
             @PathVariable Integer id,
             @RequestBody Map<String, String> request) {
@@ -44,4 +42,30 @@ public class AdminController {
         authenticationService.rejectRegistrationRequest(id, rejectionReason);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Request>> getAllRequests(){
+        List<Request> requests = requestService.findAllRequests();
+        return new ResponseEntity<>(requests, HttpStatus.OK);
+    }
+
+    @GetMapping("/find/{id}")
+    public ResponseEntity<Request> getRequestById(@PathVariable("id") Integer id){
+        Request request = requestService.findRequestById(id);
+        return new ResponseEntity<>(request, HttpStatus.OK);
+    }
+
+    @PutMapping("/update")
+    ResponseEntity<Request> updateRequest(@RequestBody Request request){
+        Request updateRequest = requestService.updateRequest(request);
+        return new ResponseEntity<>(updateRequest, HttpStatus.OK);
+    }
+
+
+
+
+
+
+
+
 }

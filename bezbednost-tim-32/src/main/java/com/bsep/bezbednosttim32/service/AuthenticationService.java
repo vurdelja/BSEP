@@ -3,15 +3,13 @@ package com.bsep.bezbednosttim32.service;
 import com.bsep.bezbednosttim32.auth.LoginResponse;
 import com.bsep.bezbednosttim32.auth.LoginRequest;
 import com.bsep.bezbednosttim32.auth.RegisterRequest;
-import com.bsep.bezbednosttim32.model.RegistrationRequest;
+import com.bsep.bezbednosttim32.model.Request;
 import com.bsep.bezbednosttim32.model.RequestStatus;
 import com.bsep.bezbednosttim32.model.Role;
 import com.bsep.bezbednosttim32.model.User;
-import com.bsep.bezbednosttim32.repository.RegistrationRequestRepository;
+import com.bsep.bezbednosttim32.repository.RequestRepository;
 import com.bsep.bezbednosttim32.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,20 +22,21 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository repository;
-    private final RegistrationRequestRepository requestRepository;
+    private final RequestRepository requestRepository;
 
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     private final EmailService emailService;
+    private final JwtService jwtService;
+    private final RequestService requestService;
 
     public LoginResponse register(RegisterRequest request) {
-        RegistrationRequest registrationRequest = new RegistrationRequest();
+        Request registrationRequest = new Request();
         registrationRequest.setEmail(request.getEmail());
         registrationRequest.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        requestRepository.save(registrationRequest);
+        requestService.addRequest(registrationRequest);
 
         return LoginResponse.builder()
                 .message("Registration request sent for approval")
@@ -45,8 +44,7 @@ public class AuthenticationService {
     }
 
     public LoginResponse approveRegistrationRequest(Integer requestId, RegisterRequest request) {
-        RegistrationRequest regRequest = requestRepository.findById(requestId)
-                .orElseThrow(() -> new NoSuchElementException("Registration request not found"));
+        Request regRequest = requestService.findRequestById(requestId);
 
         // Kreira usera na osnovu zahteva za registraciju i cuva ga
         String validationMessage = validatePassword(request.getPassword(), request.getPasswordConfirm());
@@ -74,7 +72,7 @@ public class AuthenticationService {
         repository.save(user);
 
         regRequest.setStatus(RequestStatus.APPROVED);
-        requestRepository.save(regRequest);
+        requestService.updateRequest(regRequest);
 
         // Create and send the approval email with an activation link
         String activationLink = "http://yourdomain.com/activate?token=" + generateActivationToken(user);
@@ -97,11 +95,11 @@ public class AuthenticationService {
         return UUID.randomUUID().toString();
     }
     public void rejectRegistrationRequest(Integer requestId, String rejectionReason) {
-        RegistrationRequest request = requestRepository.findById(requestId)
+        Request request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new NoSuchElementException("Registration request not found"));
 
         request.setStatus(RequestStatus.REJECTED);
-        requestRepository.save(request);
+        requestService.updateRequest(request);
 
         String toEmail = request.getEmail();  // Assuming RegistrationRequest has a getEmail() method
         String subject = "Registration Request Rejected";

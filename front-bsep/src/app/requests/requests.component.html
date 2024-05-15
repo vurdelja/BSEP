@@ -1,0 +1,16 @@
+<div *ngIf="requests">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of requests">
+          <td>{{ request.id }}</td>
+          <td>{{ request.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "requests")
 
-public class RegistrationRequest {
+public class Request {
     @Id
     @GeneratedValue
     private Integer Id;
