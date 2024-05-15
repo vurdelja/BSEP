@@ -1,13 +1,17 @@
-package com.bsep.bezbednosttim32.auth;
+package com.bsep.bezbednosttim32.service;
 
-import com.bsep.bezbednosttim32.config.JwtService;
+import com.bsep.bezbednosttim32.auth.LoginResponse;
+import com.bsep.bezbednosttim32.auth.LoginRequest;
+import com.bsep.bezbednosttim32.auth.RegisterRequest;
 import com.bsep.bezbednosttim32.model.RegistrationRequest;
+import com.bsep.bezbednosttim32.model.RequestStatus;
 import com.bsep.bezbednosttim32.model.Role;
 import com.bsep.bezbednosttim32.model.User;
 import com.bsep.bezbednosttim32.repository.RegistrationRequestRepository;
 import com.bsep.bezbednosttim32.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,27 +30,27 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthenticationResponse register(RegisterRequest request) {
+
+    public LoginResponse register(RegisterRequest request) {
         RegistrationRequest registrationRequest = new RegistrationRequest();
         registrationRequest.setEmail(request.getEmail());
         registrationRequest.setPassword(passwordEncoder.encode(request.getPassword()));
 
         requestRepository.save(registrationRequest);
 
-        return AuthenticationResponse.builder()
+        return LoginResponse.builder()
                 .message("Registration request sent for approval")
                 .build();
     }
 
-    public AuthenticationResponse approveRegistrationRequest(Integer requestId, RegisterRequest request) {
+    public LoginResponse approveRegistrationRequest(Integer requestId, RegisterRequest request) {
         RegistrationRequest regRequest = requestRepository.findById(requestId)
                 .orElseThrow(() -> new NoSuchElementException("Registration request not found"));
 
-
-        // Create a user based on the registration request and save it
+        // Kreira usera na osnovu zahteva za registraciju i cuva ga
         String validationMessage = validatePassword(request.getPassword(), request.getPasswordConfirm());
         if (validationMessage != null) {
-            return AuthenticationResponse.builder()
+            return LoginResponse.builder()
                     .message(validationMessage)
                     .build();
         }
@@ -68,22 +72,21 @@ public class AuthenticationService {
                 .build();
         repository.save(user);
 
-        regRequest.setApproved(true);
+        regRequest.setStatus(RequestStatus.APPROVED);
         requestRepository.save(regRequest);
 
-        return AuthenticationResponse.builder()
-                .message("User registered successfully")
+        return LoginResponse.builder()
+                .message("User approved for registration")
                 .build();
     }
 
-
-    public void rejectRegistrationRequest(Integer requestId) {
-        // Find the registration request by ID
+    public void rejectRegistrationRequest(Integer requestId, String rejectionReason) {
         RegistrationRequest request = requestRepository.findById(requestId)
                 .orElseThrow(() -> new NoSuchElementException("Registration request not found"));
 
-        // Mark the request as rejected or delete it
-        requestRepository.delete(request);
+
+        request.setStatus(RequestStatus.REJECTED);
+        requestRepository.save(request);
     }
 
 
@@ -100,35 +103,47 @@ public class AuthenticationService {
         if (!password.equals(passwordConfirm)) {
             return "Passwords do not match";
         }
-        return null; // All validations passed
+        return null;
     }
 
-
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    //autentifikuje korisnika, generiše novi JWT access token i refresh token, i vraća ih kao odgovor
+    public LoginResponse login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()
                 )
         );
+
         var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
-        var jwtToken =jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+
+        var accessToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+
+        return LoginResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
-    public AuthenticationResponse login(LogInRequest request) {
-        var user = User.builder()
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
-                .build();
-        repository.save(user);
-        var jwtToken =jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+
+    // proverava validnost refresh tokena, ekstraktuje korisničko ime iz tokena, traži korisnika u bazi i generiše novi access token
+    public LoginResponse refreshAccessToken(String refreshToken) {
+        if (jwtService.isTokenValid(refreshToken)) {
+            var username = jwtService.extractUsername(refreshToken);
+            var user = repository.findByEmail(username)
+                    .orElseThrow(() -> new NoSuchElementException("User not found"));
+            var accessToken = jwtService.generateToken(user);
+            return LoginResponse.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
+        } else {
+            throw new IllegalArgumentException("Invalid refresh token");
+        }
     }
+
+
+
 }
