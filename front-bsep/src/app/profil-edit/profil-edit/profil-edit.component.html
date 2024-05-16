@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            background-color: #f2f2f2; /* Svetla boja pozadine */
+            font-size: 18px; /* Uvećan font */
+            text-align: center; /* Centriranje sadržaja */
+        }
+
+        form {
+            margin: 0 auto; /* Centriranje forme */
+            width: 50%; /* Širina forme */
+        }
+
+        button {
+            font-size: 20px; /* Uvećan font za dugme */
+            margin-top: 20px; /* Prostor iznad dugmeta */
+        }
+    </style>
+</head>
+<body>
+    <h1>User Profile</h1>
+    <form>
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+
+        <label for="passwordConfirm">Confirm Password:</label>
+        <input type="password" id="passwordConfirm" name="passwordConfirm"><br><br>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address"><br><br>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city"><br><br>
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country"><br><br>
+
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber"><br><br>
+
+        <label for="userType">User Type:</label>
+        <input type="text" id="userType" name="userType"><br><br>
+
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName"><br><br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName"><br><br>
+
+        <label for="companyName">Company Name:</label>
+        <input type="text" id="companyName" name="companyName"><br><br>
+
+        <label for="pib">PIB:</label>
+        <input type="text" id="pib" name="pib"><br><br>
+        
+        <button type="submit">Save</button>
+    </form>
+
+    <script>
+        function enableEdit() {
+            // Enable all input fields
+            var inputs = document.getElementsByTagName("input");
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

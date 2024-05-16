@@ -8,6 +8,9 @@ import { AppComponent } from './app.component';
 import { RequestsComponent } from './requests/requests.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { RegisterComponent } from './register/register.component';
+import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
+import { ProfilEditComponent } from './profil-edit/profil-edit/profil-edit.component';
+import { ComercialComponent } from './comercial/comercial/comercial.component';
 
 
 @NgModule({
@@ -16,6 +19,9 @@ import { RegisterComponent } from './register/register.component';
     RequestsComponent,
     LogInComponent,
     RegisterComponent,
+    UserProfileComponent,
+    ProfilEditComponent,
+    ComercialComponent,
   ],
   imports: [
     BrowserModule,
