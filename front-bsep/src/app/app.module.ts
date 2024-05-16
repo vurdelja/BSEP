@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthInterceptor } from './auth-interceptor.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RequestsComponent } from './requests/requests.component';
-import { LogInComponent } from './log-in/log-in.component';
 import { RegisterComponent } from './register/register.component';
-
+import { AdminProfileComponent } from './admin-profile/admin-profile.component';
+import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RequestsComponent,
-    LogInComponent,
     RegisterComponent,
+    AdminProfileComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { RegisterComponent } from './register/register.component';
     HttpClientModule,
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
