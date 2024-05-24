@@ -31,16 +31,13 @@ public class RequestService {
     private final PasswordEncoder passwordEncoder;
 
     private static final Logger log = LoggerFactory.getLogger(RequestService.class);
-
     public ResponseEntity<?> sendRequest(RegisterRequest request) {
-
         String validationMessage = validatePassword(request.getPassword(), request.getPasswordConfirm());
         if (validationMessage != null) {
             return ResponseEntity.badRequest().body(validationMessage);
         }
 
         Request registrationRequest = new Request();
-
         registrationRequest.setEmail(request.getEmail());
         registrationRequest.setPassword(passwordEncoder.encode(request.getPassword()));
         registrationRequest.setAddress(request.getAddress());
@@ -53,11 +50,27 @@ public class RequestService {
         registrationRequest.setCompanyName(request.getCompanyName());
         registrationRequest.setPib(request.getPib());
         registrationRequest.setPackageType(request.getPackageType());
-        registrationRequest.setStatus(RequestStatus.PENDING); // Assuming there's a PENDING status for initial state
+        registrationRequest.setStatus(RequestStatus.PENDING);
 
         addRequest(registrationRequest);
 
         return ResponseEntity.ok("Registration request sent for approval");
+    }
+
+    private String validatePassword(String password, String passwordConfirm) {
+        if (password.length() < 8) {
+            return "Password must be at least 8 characters long";
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            return "Password must contain at least one uppercase letter";
+        }
+        if (!password.matches(".*\\d.*")) {
+            return "Password must contain at least one number";
+        }
+        if (!password.equals(passwordConfirm)) {
+            return "Passwords do not match";
+        }
+        return null;
     }
 
 
@@ -113,21 +126,6 @@ public class RequestService {
         return "Request rejected successfully.";
     }
 
-    private String validatePassword(String password, String passwordConfirm) {
-        if (password.length() < 8) {
-            return "Password must be at least 8 characters long";
-        }
-        if (!password.matches(".*[A-Z].*")) {
-            return "Password must contain at least one uppercase letter";
-        }
-        if (!password.matches(".*\\d.*")) {
-            return "Password must contain at least one number";
-        }
-        if (!password.equals(passwordConfirm)) {
-            return "Passwords do not match";
-        }
-        return null;
-    }
 
     public List<Request> findAllRequests(){
         return repository.findAll();

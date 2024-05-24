@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RegistrationService } from '../../services/registration.service';
-import { Router } from '@angular/router';  // Import Router
-import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { Router } from '@angular/router';  
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -9,8 +9,6 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
-
-
   email: string = '';
   password: string = '';
   passwordConfirm: string = '';
@@ -23,11 +21,15 @@ export class RegistrationComponent {
   companyName: string = '';
   pib: string = '';
   packageType: string = 'BASIC'; 
-  userType: string = '';
+  userType: string = 'INDIVIDUAL';
 
-  constructor(private registrationService: RegistrationService,  private router: Router) {}
+  constructor(private registrationService: RegistrationService, private router: Router) {}
 
-  save() {
+  save(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+
     let bodyData = {
       email: this.email,
       password: this.password,
@@ -54,6 +56,5 @@ export class RegistrationComponent {
         alert('Request not sent: ' + error.message);
       }
     );
-
   }
 }
