@@ -37,4 +37,7 @@ public class Request {
 
     @Enumerated(EnumType.STRING)
     private RequestStatus status;
+
+    private String activationToken;
+
 }

@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface RequestRepository extends JpaRepository<Request, Integer> {
 
     Optional<Request> findRequestById(Integer id);
+
+    Optional<Request> findByActivationToken(String activationToken);
 }

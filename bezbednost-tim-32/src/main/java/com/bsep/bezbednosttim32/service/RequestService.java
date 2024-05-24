@@ -21,9 +21,9 @@ import java.util.UUID;
 @AllArgsConstructor
 public class RequestService {
     private final RequestRepository repository;
-    private final EmailService emailService;
     private final UserRepository userRepository;
 
+    private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
     public LoginResponse sendRequest(RegisterRequest request) {
@@ -58,51 +58,63 @@ public class RequestService {
                 .build();
     }
 
-
     public LoginResponse approveRequest(Integer requestId) {
         Request regRequest = findRequestById(requestId);
 
-
-        var user = User.builder()
-                .email(regRequest.getEmail())
-                .password(passwordEncoder.encode(regRequest.getPassword()))
-                .role(Role.USER)
-                .address(regRequest.getAddress())
-                .city(regRequest.getCity())
-                .country(regRequest.getCountry())
-                .phoneNumber(regRequest.getPhoneNumber())
-                .userType(regRequest.getUserType())
-                .firstName(regRequest.getFirstName())
-                .lastName(regRequest.getLastName())
-                .companyName(regRequest.getCompanyName())
-                .pib(regRequest.getPib())
-                .packageType(regRequest.getPackageType())
-                .build();
-        userRepository.save(user);
-
+        // Set status to APPROVED
         regRequest.setStatus(RequestStatus.APPROVED);
         updateRequest(regRequest);
 
-        // Create and send the approval email with an activation link
-        String activationLink = "http://yourdomain.com/activate?token=" + generateActivationToken(user);
-        String emailBody = "Dear " + user.getFirstName() + ",\n\n"
-                + "Your registration has been approved. Please click the following link to activate your account:\n"
-                + activationLink + "\n\n"
-                + "Best regards,\n"
-                + "Your Company";
+        // Generate activation token and create activation link
+        String activationToken = generateActivationToken(regRequest);
+        String activationLink = "http://localhost:8080/bsep/request/activate?token=" + activationToken;
 
-        emailService.sendEmail(user.getEmail(), "Registration Approved", emailBody);
+        // Email body with activation link
+        String emailBody = String.format("Dear %s,\n\n" +
+                "Your registration has been approved. Please click the following link to activate your account:\n" +
+                "%s\n\n" +
+                "Best regards,\n" +
+                "Your Company", regRequest.getFirstName(), activationLink);
+
+        emailService.sendEmail(regRequest.getEmail(), "Registration Approved", emailBody);
 
         return LoginResponse.builder()
-                .message("User approved for registration")
+                .message("Activation email sent. Please check your email to activate your account.")
                 .build();
     }
 
-    private String generateActivationToken(User user) {
-        // Generate an activation token (e.g., JWT or a unique UUID)
-        // This is a placeholder; you need to implement token generation logic
-        return UUID.randomUUID().toString();
+
+    /*public LoginResponse approveRequest(Integer requestId) {
+        Request regRequest = findRequestById(requestId);
+        regRequest.setStatus(RequestStatus.APPROVED);
+        updateRequest(regRequest);
+
+        // Generate activation token and create activation link
+        String activationToken = generateActivationToken(regRequest);
+        String activationLink = "http://yourdomain.com/activate?token=" + activationToken;
+
+        // Email body with activation link
+        String emailBody = String.format("Dear %s,\n\n" +
+                "Your registration has been approved. Please click the following link to activate your account:\n" +
+                "%s\n\n" +
+                "Best regards,\n" +
+                "Your Company", regRequest.getFirstName(), activationLink);
+
+        emailService.sendEmail(regRequest.getEmail(), "Registration Approved", emailBody);
+
+        return LoginResponse.builder()
+                .message("Activation email sent. Please check your email to activate your account.")
+                .build();
+    }*/
+
+    private String generateActivationToken(Request request) {
+        String token = UUID.randomUUID().toString();
+        request.setActivationToken(token);  // Ensure your Request entity has a field for this
+        updateRequest(request);  // Save the updated request with the token
+        return token;
     }
+
+
     public void rejectRegistrationRequest(Integer requestId, String rejectionReason) {
         Request request = repository.findById(requestId)
                 .orElseThrow(() -> new NoSuchElementException("Registration request not found"));
