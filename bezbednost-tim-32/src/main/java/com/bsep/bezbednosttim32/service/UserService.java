@@ -6,25 +6,54 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
+    private final UserRepository repository;
 
     public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+        this.repository = userRepository;
     }
 
     public List<User> allUsers() {
         List<User> users = new ArrayList<>();
 
-        userRepository.findAll().forEach(users::add);
+        repository.findAll().forEach(users::add);
 
         return users;
     }
+    public RegisterRequest getUserDetails(Integer userId) {
+        // Dohvati korisnika iz baze podataka na osnovu ID-a
+        User user = repository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+
+        // Kreirajte objekat UserDetailsResponse sa podacima o korisniku
+        RegisterRequest userDetailsResponse = new RegisterRequest();
+        userDetailsResponse.setId(user.getId());
+        userDetailsResponse.setEmail(user.getEmail());
+        userDetailsResponse.setPassword(user.getPassword());
+        userDetailsResponse.setPasswordConfirm(user.getPasswordConfirm());
+        userDetailsResponse.setAddress(user.getAddress());
+        userDetailsResponse.setCity(user.getCity());
+        userDetailsResponse.setCountry(user.getCountry());
+        userDetailsResponse.setPhoneNumber(user.getPhoneNumber());
+        userDetailsResponse.setUserType(user.getUserType());
+        userDetailsResponse.setFirstName(user.getFirstName());
+        userDetailsResponse.setLastName(user.getLastName());
+        userDetailsResponse.setCompanyName(user.getCompanyName());
+        userDetailsResponse.setPib(user.getPib());
+        userDetailsResponse.setPackageType(user.getPackageType());
+
+        // Postavite ostale podatke prema potrebama vaše aplikacije
+
+        return userDetailsResponse;
+    }
+
+
     public boolean updateUserDetails(Integer userId, RegisterRequest userUpdateRequest) {
         // Pronalaženje korisnika po ID-ju
-        User existingUser = userRepository.findById(userId).orElse(null);
+        User existingUser = repository.findById(userId).orElse(null);
 
         // Provera da li je korisnik pronađen
         if (existingUser == null) {
@@ -43,7 +72,7 @@ public class UserService {
         existingUser.setPib(userUpdateRequest.getPib());
 
         // Snimanje ažuriranih podataka u bazu
-        userRepository.save(existingUser);
+        repository.save(existingUser);
 
         return true; // Vraćanje true ako je ažuriranje uspešno
     }

@@ -21,7 +21,7 @@ public class UserController {
 
     @GetMapping("/getUser/{userId}")
     public ResponseEntity<RegisterRequest> getUserDetails(@PathVariable Integer userId) {
-        RegisterRequest userDetailsResponse = service.getUserDetails(userId);
+        RegisterRequest userDetailsResponse = userService.getUserDetails(userId);
         return ResponseEntity.ok(userDetailsResponse);
     }
     @PatchMapping("/updateUser/{userId}")

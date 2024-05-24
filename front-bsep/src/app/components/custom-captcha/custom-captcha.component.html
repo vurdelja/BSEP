@@ -1,0 +1,6 @@
+<div class="captcha-container">
+    <p>{{ question }}</p>
+    <input type="text" [(ngModel)]="userAnswer" placeholder="Your answer" />
+    <button type="button" (click)="validateAnswer()">Submit</button>
+  </div>
+  

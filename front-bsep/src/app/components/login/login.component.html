@@ -1,0 +1,27 @@
+<div class="container mt-4">
+    <div class="card">
+      <h1>Login</h1>
+      <form (ngSubmit)="login()">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" [(ngModel)]="email" name="email" class="form-control" id="email" placeholder="Enter Email" required />
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" [(ngModel)]="password" name="password" class="form-control" id="password" placeholder="Enter Password" required />
+        </div>
+  
+        <div class="form-group">
+          <re-captcha (resolved)="resolved($event)" siteKey="6LcFZOcpAAAAAOZX8zr6DOBpsvp2zrVc4_yPNE0P"></re-captcha>
+        </div>
+  
+        <div *ngIf="showCustomCaptcha">
+          <app-custom-captcha (captchaResolved)="onCustomCaptchaResolved($event)"></app-custom-captcha>
+        </div>
+  
+        <button type="submit" class="btn" [ngClass]="{'btn-primary': captchaResolved && customCaptchaResolved, 'btn-secondary': !captchaResolved || !customCaptchaResolved}" [disabled]="!captchaResolved || !customCaptchaResolved">Login</button>
+      </form>
+    </div>
+  </div>
+  

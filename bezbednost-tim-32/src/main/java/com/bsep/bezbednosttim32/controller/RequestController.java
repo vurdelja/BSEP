@@ -16,16 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
 @RestController
 @RequestMapping("/bsep/request")
 @RequiredArgsConstructor
 public class RequestController {
     private final RequestService service;
     private final UserRepository userRepository;
-    private final RequestRepository requestRepository;  // Assuming you have a RequestRepository
-    private final PasswordEncoder passwordEncoder;     // Make sure to inject PasswordEncoder
-
+    private final RequestRepository requestRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/sendRequest")
     public ResponseEntity<?> sendRequest(@RequestBody RegisterRequest request) {
@@ -38,16 +36,11 @@ public class RequestController {
         }
     }
 
-
     @PostMapping("/approve/{requestId}")
-    public ResponseEntity<ResponseEntity> approveRegistrationRequest(
-            @PathVariable Integer requestId
-    ) {
+    public ResponseEntity<ResponseEntity> approveRegistrationRequest(@PathVariable Integer requestId) {
         ResponseEntity response = service.approveRequest(requestId);
         return ResponseEntity.ok(response);
     }
-
-
 
     @GetMapping("/activate")
     public ResponseEntity<String> activateAccount(@RequestParam String token) {
@@ -57,7 +50,6 @@ public class RequestController {
 
             User newUser = createUserFromRequest(request);
             userRepository.save(newUser);
-            service.updateRequest(request);  // Assuming RequestService has an updateRequest method
 
             return ResponseEntity.ok("Account activated successfully!");
         } catch (Exception e) {
@@ -65,11 +57,10 @@ public class RequestController {
         }
     }
 
-
     private User createUserFromRequest(Request request) {
         return User.builder()
                 .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .password(request.getPassword()) // Password is already hashed during request creation
                 .role(Role.USER)
                 .address(request.getAddress())
                 .city(request.getCity())
@@ -84,12 +75,8 @@ public class RequestController {
                 .build();
     }
 
-
-
     @PostMapping("/reject/{id}")
-    public ResponseEntity<String> rejectRegistrationRequest(
-            @PathVariable Integer id,
-            @RequestBody Map<String, String> requestMap) {
+    public ResponseEntity<String> rejectRegistrationRequest(@PathVariable Integer id, @RequestBody Map<String, String> requestMap) {
         String rejectionReason = requestMap.get("reason");
         if (rejectionReason == null) {
             return ResponseEntity.badRequest().body("Rejection reason must be provided.");
@@ -104,17 +91,10 @@ public class RequestController {
                     .body("An error occurred while processing your request.");
         }
     }
-    
+
     @GetMapping("/all")
-    public ResponseEntity<List<Request>> getAllRequests(){
+    public ResponseEntity<List<Request>> getAllRequests() {
         List<Request> requests = service.findAllRequests();
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
-
-
-
-
-
-
-
 }
