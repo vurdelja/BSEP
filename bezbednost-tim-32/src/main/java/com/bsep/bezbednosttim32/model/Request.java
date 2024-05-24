@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -39,5 +41,8 @@ public class Request {
     private RequestStatus status;
 
     private String activationToken;
+
+    @Column
+    private LocalDateTime rejectionTime;
 
 }

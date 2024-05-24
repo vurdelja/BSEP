@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/bsep/request")
@@ -27,7 +28,7 @@ public class RequestController {
 
 
     @PostMapping("/sendRequest")
-    public ResponseEntity<LoginResponse> sendRequest(@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> sendRequest(@RequestBody RegisterRequest request) {
         try {
             System.out.println(request);
             return ResponseEntity.ok(service.sendRequest(request));
@@ -39,10 +40,10 @@ public class RequestController {
 
 
     @PostMapping("/approve/{requestId}")
-    public ResponseEntity<LoginResponse> approveRegistrationRequest(
+    public ResponseEntity<ResponseEntity> approveRegistrationRequest(
             @PathVariable Integer requestId
     ) {
-        LoginResponse response = service.approveRequest(requestId);
+        ResponseEntity response = service.approveRequest(requestId);
         return ResponseEntity.ok(response);
     }
 
@@ -83,22 +84,27 @@ public class RequestController {
                 .build();
     }
 
-    private Request validateTokenAndGetRequest(String token) {
-        // Implement token validation and retrieval of request
-        return requestRepository.findByActivationToken(token).orElseThrow(() -> new IllegalStateException("Invalid activation token."));
-    }
-
 
 
     @PostMapping("/reject/{id}")
-    public ResponseEntity<Void> rejectRegistrationRequest(
+    public ResponseEntity<String> rejectRegistrationRequest(
             @PathVariable Integer id,
-            @RequestBody Map<String, String> request) {
-        String rejectionReason = request.get("reason");
-        service.rejectRegistrationRequest(id, rejectionReason);
-        return ResponseEntity.noContent().build();
+            @RequestBody Map<String, String> requestMap) {
+        String rejectionReason = requestMap.get("reason");
+        if (rejectionReason == null) {
+            return ResponseEntity.badRequest().body("Rejection reason must be provided.");
+        }
+        try {
+            String response = service.rejectRegistrationRequest(id, rejectionReason);
+            return ResponseEntity.ok(response);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An error occurred while processing your request.");
+        }
     }
-
+    
     @GetMapping("/all")
     public ResponseEntity<List<Request>> getAllRequests(){
         List<Request> requests = service.findAllRequests();
