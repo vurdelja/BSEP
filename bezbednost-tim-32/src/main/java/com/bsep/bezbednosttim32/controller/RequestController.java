@@ -18,18 +18,26 @@ import java.util.Map;
 @RequestMapping("/bsep/request")
 @RequiredArgsConstructor
 public class RequestController {
+    private final RequestService service;
 
-    private final AuthenticationService authenticationService;
-    private final RequestService requestService;
-    private final RequestRepository repository;
+
+    @PostMapping("/sendRequest")
+    public ResponseEntity<LoginResponse> sendRequest(@RequestBody RegisterRequest request) {
+        try {
+            System.out.println(request);
+            return ResponseEntity.ok(service.sendRequest(request));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new LoginResponse("Registration failed: " + e.getMessage()));
+        }
+    }
 
 
     @PostMapping("/approve/{requestId}")
     public ResponseEntity<LoginResponse> approveRegistrationRequest(
-            @PathVariable Integer requestId,
-            @RequestBody RegisterRequest request
+            @PathVariable Integer requestId
     ) {
-        LoginResponse response = authenticationService.approveRegistrationRequest(requestId, request);
+        LoginResponse response = service.approveRequest(requestId);
         return ResponseEntity.ok(response);
     }
 
@@ -39,28 +47,15 @@ public class RequestController {
             @PathVariable Integer id,
             @RequestBody Map<String, String> request) {
         String rejectionReason = request.get("reason");
-        authenticationService.rejectRegistrationRequest(id, rejectionReason);
+        service.rejectRegistrationRequest(id, rejectionReason);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Request>> getAllRequests(){
-        List<Request> requests = requestService.findAllRequests();
+        List<Request> requests = service.findAllRequests();
         return new ResponseEntity<>(requests, HttpStatus.OK);
     }
-
-    @GetMapping("/find/{id}")
-    public ResponseEntity<Request> getRequestById(@PathVariable("id") Integer id){
-        Request request = requestService.findRequestById(id);
-        return new ResponseEntity<>(request, HttpStatus.OK);
-    }
-
-    @PutMapping("/update")
-    ResponseEntity<Request> updateRequest(@RequestBody Request request){
-        Request updateRequest = requestService.updateRequest(request);
-        return new ResponseEntity<>(updateRequest, HttpStatus.OK);
-    }
-
 
 
 

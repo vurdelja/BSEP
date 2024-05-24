@@ -22,112 +22,14 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository repository;
-    private final RequestRepository requestRepository;
 
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    private final EmailService emailService;
+
     private final JwtService jwtService;
-    private final RequestService requestService;
-
-    public LoginResponse register(RegisterRequest request) {
-        Request registrationRequest = new Request();
-        registrationRequest.setEmail(request.getEmail());
-        registrationRequest.setPassword(passwordEncoder.encode(request.getPassword()));
-
-        requestService.addRequest(registrationRequest);
-
-        return LoginResponse.builder()
-                .message("Registration request sent for approval")
-                .build();
-    }
-
-    public LoginResponse approveRegistrationRequest(Integer requestId, RegisterRequest request) {
-        Request regRequest = requestService.findRequestById(requestId);
-
-        // Kreira usera na osnovu zahteva za registraciju i cuva ga
-        String validationMessage = validatePassword(request.getPassword(), request.getPasswordConfirm());
-        if (validationMessage != null) {
-            return LoginResponse.builder()
-                    .message(validationMessage)
-                    .build();
-        }
-
-        var user = User.builder()
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
-                .address(request.getAddress())
-                .city(request.getCity())
-                .country(request.getCountry())
-                .phoneNumber(request.getPhoneNumber())
-                .userType(request.getUserType())
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
-                .companyName(request.getCompanyName())
-                .pib(request.getPib())
-                .packageType(request.getPackageType())
-                .build();
-        repository.save(user);
-
-        regRequest.setStatus(RequestStatus.APPROVED);
-        requestService.updateRequest(regRequest);
-
-        // Create and send the approval email with an activation link
-        String activationLink = "http://yourdomain.com/activate?token=" + generateActivationToken(user);
-        String emailBody = "Dear " + user.getFirstName() + ",\n\n"
-                + "Your registration has been approved. Please click the following link to activate your account:\n"
-                + activationLink + "\n\n"
-                + "Best regards,\n"
-                + "Your Company";
-
-        emailService.sendEmail(user.getEmail(), "Registration Approved", emailBody);
-
-        return LoginResponse.builder()
-                .message("User approved for registration")
-                .build();
-    }
-
-    private String generateActivationToken(User user) {
-        // Generate an activation token (e.g., JWT or a unique UUID)
-        // This is a placeholder; you need to implement token generation logic
-        return UUID.randomUUID().toString();
-    }
-    public void rejectRegistrationRequest(Integer requestId, String rejectionReason) {
-        Request request = requestRepository.findById(requestId)
-                .orElseThrow(() -> new NoSuchElementException("Registration request not found"));
-
-        request.setStatus(RequestStatus.REJECTED);
-        requestService.updateRequest(request);
-
-        String toEmail = request.getEmail();  // Assuming RegistrationRequest has a getEmail() method
-        String subject = "Registration Request Rejected";
-        String body = "Dear " + request.getEmail() + ",\n\n" + // Assuming RegistrationRequest has getFirstName()
-                "Your registration request has been rejected for the following reason:\n" +
-                rejectionReason + "\n\n" +
-                "Best regards,\n" +
-                "Your Company";
-
-        emailService.sendEmail(toEmail, subject, body);
-    }
 
 
-    private String validatePassword(String password, String passwordConfirm) {
-        if (password.length() < 8) {
-            return "Password must be at least 8 characters long";
-        }
-        if (!password.matches(".*[A-Z].*")) {
-            return "Password must contain at least one uppercase letter";
-        }
-        if (!password.matches(".*\\d.*")) {
-            return "Password must contain at least one number";
-        }
-        if (!password.equals(passwordConfirm)) {
-            return "Passwords do not match";
-        }
-        return null;
-    }
+
 
     //autentifikuje korisnika, generiše novi JWT access token i refresh token, i vraća ih kao odgovor
     public LoginResponse login(LoginRequest request) {

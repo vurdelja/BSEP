@@ -11,43 +11,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/bsep/auth")
+@RequestMapping("/bsep/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final AuthenticationService service;
     private final UserService userService;
 
-    @PostMapping("/register")
-    public ResponseEntity<LoginResponse> register(@RequestBody RegisterRequest request) {
-        try {
-            System.out.println(request); // Dodaj logovanje
-            return ResponseEntity.ok(service.register(request));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new LoginResponse("Registration failed: " + e.getMessage()));
-        }
-    }
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(
-            @RequestBody LoginRequest request
-    ){
-        return ResponseEntity.ok(service.login(request));
-    }
 
-    @PostMapping("/refresh-token")
-    public ResponseEntity<LoginResponse> refreshToken(
-            @RequestBody Map<String, String> request
-    ) {
-        String refreshToken = request.get("refreshToken");
-        return ResponseEntity.ok(service.refreshAccessToken(refreshToken));
-    }
-    @GetMapping("/users/{userId}")
+    @GetMapping("/getUser/{userId}")
     public ResponseEntity<RegisterRequest> getUserDetails(@PathVariable Integer userId) {
         RegisterRequest userDetailsResponse = service.getUserDetails(userId);
         return ResponseEntity.ok(userDetailsResponse);
     }
-    @PatchMapping("/users/{userId}")
+    @PatchMapping("/updateUser/{userId}")
     public ResponseEntity<Boolean> updateUserDetails(@PathVariable Integer userId, @RequestBody RegisterRequest userUpdateRequest) {
         boolean isUpdated = userService.updateUserDetails(userId, userUpdateRequest);
         return ResponseEntity.ok(isUpdated);
