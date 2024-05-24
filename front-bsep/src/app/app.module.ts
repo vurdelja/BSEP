@@ -12,6 +12,9 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { EmployeeProfileComponent } from './components/employee-profile/employee-profile.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { CustomCaptchaComponent } from './components/custom-captcha/custom-captcha.component';
+import { ProfilEditComponent } from './profil-edit/profil-edit/profil-edit.component';
+import { ComercialComponent } from './comercial/comercial/comercial.component';
+
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { CustomCaptchaComponent } from './components/custom-captcha/custom-captc
     EmployeeProfileComponent,
     UserProfileComponent,
     CustomCaptchaComponent,
+    UserProfileComponent,
+    ProfilEditComponent,
+    ComercialComponent
   ],
   imports: [
     BrowserModule,
