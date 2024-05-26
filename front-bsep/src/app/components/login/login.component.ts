@@ -29,6 +29,19 @@ export class LoginComponent {
     this.customCaptchaResolved = resolved;
   }
 
+  redirectUser(role: string) {
+    if (role === 'ADMIN') {
+      this.router.navigate(['/admin-profile']);
+    } else if (role === 'EMPLOYEE') {
+      this.router.navigate(['/employee-profile']);
+    } else if (role === 'USER') {
+      this.router.navigate(['/user-profile']);
+    } else {
+      console.error('Unknown role:', role);
+      alert('Unknown role: ' + role);
+    }
+  }
+
   login() {
     if (!this.captchaToken || !this.customCaptchaResolved) {
       alert('Please resolve the CAPTCHA first');
@@ -45,12 +58,27 @@ export class LoginComponent {
       (response: any) => {
         console.log(response);
         alert('Login successful');
-        this.router.navigate(['admin']); // Navigate to home or another route
+        
+        const userId = response.userId;  // Assume the response contains the user's ID
+        const userRole = response.role;  // Assume the response contains the user's role
+        if (userRole === 'ADMIN') {
+          this.router.navigate([`/admin/${userId}`]);  // Navigate to the admin profile page with user ID
+        } else if (userRole === 'EMPLOYEE') {
+          this.router.navigate([`/employee-profile/${userId}`]);  // Navigate to the employee profile page with user ID
+        } else if (userRole === 'USER') {
+          this.router.navigate([`/user-profile/${userId}`]);  // Navigate to the user profile page with user ID
+        } else {
+          alert('Invalid user role');
+        }
       },
       (error) => {
         console.error(error);
         alert('Login failed: ' + error.message);
       }
     );
+
+
+  
+
   }
 }

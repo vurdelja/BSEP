@@ -14,6 +14,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { CustomCaptchaComponent } from './components/custom-captcha/custom-captcha.component';
 import { ProfilEditComponent } from './profil-edit/profil-edit/profil-edit.component';
 import { ComercialComponent } from './comercial/comercial/comercial.component';
+import { CommercialRequestsComponent } from './components/commercial-requests/commercial-requests.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ComercialComponent } from './comercial/comercial/comercial.component';
     CustomCaptchaComponent,
     UserProfileComponent,
     ProfilEditComponent,
-    ComercialComponent
+    ComercialComponent,
+    CommercialRequestsComponent
   ],
   imports: [
     BrowserModule,

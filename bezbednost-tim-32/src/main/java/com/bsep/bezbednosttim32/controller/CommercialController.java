@@ -1,35 +1,29 @@
 package com.bsep.bezbednosttim32.controller;
 
-import com.bsep.bezbednosttim32.model.Comercial;
+import com.bsep.bezbednosttim32.model.Commercial;
 import com.bsep.bezbednosttim32.service.CommercialService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/bsep/auth")
+@RequestMapping("/bsep/commercial")
+@RequiredArgsConstructor
 public class CommercialController {
 
     private final CommercialService commercialService;
 
-    @Autowired
-    public CommercialController(CommercialService commercialService) {
-        this.commercialService = commercialService;
+    @GetMapping("/all")
+    public ResponseEntity<List<Commercial>> getCommercials() {
+        List<Commercial> commercials = commercialService.getAllCommercials();
+        return ResponseEntity.ok(commercials);
     }
 
-    @PostMapping("/commercial")
-    public ResponseEntity<Comercial> createCommercial(@RequestBody Comercial commercial) {
-        Comercial createdCommercial = commercialService.createCommercial(commercial);
-        return new ResponseEntity<>(createdCommercial, HttpStatus.CREATED);
+    @PostMapping("/create")
+    public ResponseEntity<Commercial> addCommercial(@RequestBody Commercial commercial) {
+        Commercial newCommercial = commercialService.create(commercial);
+        return ResponseEntity.ok(newCommercial);
     }
-    @GetMapping("/commercial")
-    public ResponseEntity<List<Comercial>> getAllCommercials() {
-        List<Comercial> commercials = commercialService.getAllCommercials();
-        return new ResponseEntity<>(commercials, HttpStatus.OK);
-    }
-
-    // Dodatne metode po potrebi
 }

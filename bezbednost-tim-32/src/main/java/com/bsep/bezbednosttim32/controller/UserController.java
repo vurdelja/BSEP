@@ -1,6 +1,7 @@
 package com.bsep.bezbednosttim32.controller;
 
 import com.bsep.bezbednosttim32.auth.*;
+import com.bsep.bezbednosttim32.model.User;
 import com.bsep.bezbednosttim32.service.AuthenticationService;
 import com.bsep.bezbednosttim32.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -14,20 +15,20 @@ import java.util.Map;
 @RequestMapping("/bsep/user")
 @RequiredArgsConstructor
 public class UserController {
-
-    private final AuthenticationService service;
     private final UserService userService;
 
 
-    @GetMapping("/getUser/{userId}")
-    public ResponseEntity<RegisterRequest> getUserDetails(@PathVariable Integer userId) {
-        RegisterRequest userDetailsResponse = userService.getUserDetails(userId);
-        return ResponseEntity.ok(userDetailsResponse);
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Integer id) {
+        User user = userService.findUserById(id);
+        return ResponseEntity.ok(user);
     }
-    @PatchMapping("/updateUser/{userId}")
-    public ResponseEntity<Boolean> updateUserDetails(@PathVariable Integer userId, @RequestBody RegisterRequest userUpdateRequest) {
-        boolean isUpdated = userService.updateUserDetails(userId, userUpdateRequest);
-        return ResponseEntity.ok(isUpdated);
+
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) {
+        User updatedUser = userService.updateUser(id, user);
+        return ResponseEntity.ok(updatedUser);
     }
 
 

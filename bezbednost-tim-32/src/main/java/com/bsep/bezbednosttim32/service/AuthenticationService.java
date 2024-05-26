@@ -52,6 +52,8 @@ public class AuthenticationService {
         return LoginResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .role(user.getRole().name())  // Include the role in the response
+                .userId(user.getId())
                 .build();
     }
 

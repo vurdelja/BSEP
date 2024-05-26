@@ -1,0 +1,61 @@
+/* src/app/register/register.component.css */
+.error {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 5px;
+  }
+  
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #333;
+    margin: 0;
+    color: white; /* Bel tekst za bolju vidljivost */
+  }
+  
+  form {
+    background: #444; /* Tamno siva pozadina forme */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    color: white; /* Bel tekst unutar forme */
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #ff1493;
+  }
+  
+  input, select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #ff1493;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background: #555; /* Još tamnija pozadina polja */
+    color: white; /* Bel tekst unutar polja */
+  }
+  
+  button {
+    background-color: #ff1493;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  button:hover {
+    background-color: #ff69b4;
+  }
+  

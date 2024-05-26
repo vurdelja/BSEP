@@ -1,28 +1,23 @@
 package com.bsep.bezbednosttim32.service;
 
-import com.bsep.bezbednosttim32.model.Comercial;
+import com.bsep.bezbednosttim32.model.Commercial;
 import com.bsep.bezbednosttim32.repository.CommercialRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommercialService {
 
     private final CommercialRepository commercialRepository;
 
-    @Autowired
-    public CommercialService(CommercialRepository commercialRepository) {
-        this.commercialRepository = commercialRepository;
-    }
-
-    public Comercial createCommercial(Comercial commercial) {
-        return commercialRepository.save(commercial);
-    }
-    public List<Comercial> getAllCommercials() {
+    public List<Commercial> getAllCommercials() {
         return commercialRepository.findAll();
     }
 
-    // Dodatne metode po potrebi
+    public Commercial create(Commercial commercial) {
+        return commercialRepository.save(commercial);
+    }
 }

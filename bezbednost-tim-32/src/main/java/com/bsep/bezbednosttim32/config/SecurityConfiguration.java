@@ -31,9 +31,14 @@ public class SecurityConfiguration{
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authz) -> authz
-                        .anyRequest().permitAll())
-                    /*    .requestMatchers("/bsep/**").permitAll()
-                        .anyRequest().authenticated())*/
+                        .requestMatchers("/bsep/auth/login",
+                                "/bsep/auth/refresh-token",
+                                "bsep/request/**",
+                                "/bsep/commercial/all",
+                                "/bsep/commercial/create",
+                                "/bsep/user/**"
+                                ).permitAll() // Allow unauthenticated access to login
+                        .anyRequest().authenticated())
 
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

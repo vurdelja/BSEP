@@ -1,26 +1,24 @@
 package com.bsep.bezbednosttim32.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "comercials")
-
-public class Comercial {
-    @jakarta.persistence.Id
+@Entity
+@Table(name = "commercials")
+public class Commercial {
+    @Id
     @GeneratedValue
     private Integer id;
-    private Integer clientId;
+
+    private String client;
     private String slogan;
     private String duration;
     private String description;
-
 }
