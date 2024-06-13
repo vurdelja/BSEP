@@ -28,7 +28,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler, refreshToken: string) {
-    return this.authService.refreshToken(refreshToken).pipe(
+    return this.authService.refreshToken().pipe(
       switchMap((tokenResponse: any) => {
         localStorage.setItem('accessToken', tokenResponse.accessToken);
         request = request.clone({

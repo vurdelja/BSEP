@@ -42,23 +42,33 @@ export class LoginComponent {
     }
   }
 
+  
   login() {
+    // Očistite stare tokene pre nego što pošaljete novi zahtev za prijavu
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  
     if (!this.captchaToken || !this.customCaptchaResolved) {
       alert('Please resolve the CAPTCHA first');
       return;
     }
-
+  
     const credentials = {
       email: this.email,
       password: this.password,
       captchaToken: this.captchaToken
     };
-
+  
+    console.log('Sending login request with credentials:', credentials);
+  
     this.registrationService.login(credentials).subscribe(
       (response: any) => {
         console.log(response);
         alert('Login successful');
-        
+  
+        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem('refreshToken', response.refreshToken);
+  
         const userId = response.userId;  // Assume the response contains the user's ID
         const userRole = response.role;  // Assume the response contains the user's role
         if (userRole === 'ADMIN') {
@@ -72,12 +82,10 @@ export class LoginComponent {
         }
       },
       (error) => {
-        console.error(error);
+        console.error('Login failed:', error);
         alert('Login failed: ' + error.message);
       }
-    );
-
-
+    );  
   
 
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +18,26 @@ export class AuthService {
     localStorage.setItem('refreshToken', refreshToken);
   }
 
-
-  login(credentials: {email: string, password: string, captchaToken: string}): Observable<any> {
+  // Login method
+  login(credentials: { email: string, password: string, captchaToken: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, credentials);
   }
 
-
-  refreshToken(refreshToken: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/refresh-token`, { refreshToken });
+  // Refresh token method
+  refreshToken(): Observable<any> {
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (refreshToken) {
+      return this.http.post(`${this.baseUrl}/refresh-token`, { refreshToken }).pipe(
+        switchMap((response: any) => {
+          this.storeTokens(response.accessToken, response.refreshToken);
+          return of(response.accessToken);
+        }),
+        catchError(error => {
+          console.error('Refresh token failed', error);
+          return of(null);
+        })
+      );
+    }
+    return of(null);
   }
-
 }

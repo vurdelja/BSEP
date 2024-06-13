@@ -32,6 +32,7 @@ public class SecurityConfiguration{
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/bsep/auth/login",
+                                "/bsep/auth/**",
                                 "/bsep/auth/refresh-token",
                                 "bsep/request/**",
                                 "/bsep/commercial/all",
