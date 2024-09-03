@@ -33,8 +33,9 @@ public class SecurityConfiguration{
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/bsep/auth/login",
                                 "/bsep/auth/**",
+                                "/bsep/auth/register",
                                 "/bsep/auth/refresh-token",
-                                "bsep/request/**",
+                                "/bsep/registration/**",
                                 "/bsep/commercial/all",
                                 "/bsep/commercial/create",
                                 "/bsep/user/**"

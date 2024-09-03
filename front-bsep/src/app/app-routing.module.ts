@@ -1,27 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { AdminProfileComponent } from './components/admin-profile/admin-profile.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
 import { ProfilEditComponent } from './profil-edit/profil-edit/profil-edit.component';
 import { ComercialComponent } from './comercial/comercial/comercial.component';
-import { EmployeeProfileComponent } from './components/employee-profile/employee-profile.component';
-import { CommercialRequestsComponent } from './components/commercial-requests/commercial-requests.component';
 
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
-  { path: 'admin/:id', component: AdminProfileComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegistrationComponent },
   { path: 'user-profile/:id', component: UserProfileComponent },
   { path: 'edit-profile', component: ProfilEditComponent },
-  { path: 'comercial', component: ComercialComponent },
-  { path: 'employee-profile/:id', component: EmployeeProfileComponent },
-  { path: 'commercial-requests', component: CommercialRequestsComponent }
-
 ];
 
 

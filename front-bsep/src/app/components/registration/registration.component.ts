@@ -49,11 +49,11 @@ export class RegistrationComponent {
     this.registrationService.registerUser(bodyData).subscribe(
       (resultData: any) => {
         console.log(resultData);
-        alert('Registration request sent successfully');
+        alert('Registered successfully.');
       },
       (error) => {
         console.error(error);
-        alert('Request not sent: ' + error.message);
+        alert('Unsuccessfull registration. ' + error.message);
       }
     );
   }
