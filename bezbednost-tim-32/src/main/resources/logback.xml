@@ -1,0 +1,32 @@
+<configuration>
+    <!-- Define an appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- Define the log message format -->
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss} - %level - [%thread] - %logger{10} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Define a file-based appender -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/myapp.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover with a history of 30 days -->
+            <fileNamePattern>logs/myapp-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss} - %level - [%thread] - %logger{10} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Set the root logging level and add appenders -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

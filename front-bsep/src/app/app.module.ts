@@ -8,12 +8,11 @@ import { AppComponent } from './app.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { CustomCaptchaComponent } from './components/custom-captcha/custom-captcha.component';
 import { ProfilEditComponent } from './profil-edit/profil-edit/profil-edit.component';
-import { ComercialComponent } from './comercial/comercial/comercial.component';
-import { TokenInterceptor } from './interceptors/token.interceptor';
 import { RefreshTokenDialogComponent } from './refresh-token-dialog/refresh-token-dialog.component';
+import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 
 
@@ -23,11 +22,9 @@ import { RefreshTokenDialogComponent } from './refresh-token-dialog/refresh-toke
     RegistrationComponent,
     LoginComponent,
     HomePageComponent,
-    UserProfileComponent,
     CustomCaptchaComponent,
-    UserProfileComponent,
     ProfilEditComponent,
-    ComercialComponent,
+    UserProfileComponent,
     RefreshTokenDialogComponent
   ],
   imports: [
@@ -41,7 +38,7 @@ import { RefreshTokenDialogComponent } from './refresh-token-dialog/refresh-toke
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
+      useClass: AuthInterceptorService,
       multi: true
     }
   ],

@@ -20,10 +20,13 @@ public class RegistrationService {
     private final UserRepository userRepository;
     private static final Logger log = LoggerFactory.getLogger(RegistrationService.class);
     public Map<String, Object> registerUser(RegisterRequest request) {
-        Map<String, Object> response = new HashMap<>();
+        log.debug("Registering new user with email: {}", request.getEmail());
 
+        Map<String, Object> response = new HashMap<>();
         String validationMessage = validatePassword(request.getPassword(), request.getPasswordConfirm());
+
         if (validationMessage != null) {
+            log.warn("Password validation failed for user {}: {}", request.getEmail(), validationMessage);
             response.put("status", "error");
             response.put("message", validationMessage);
             return response;
@@ -31,6 +34,7 @@ public class RegistrationService {
 
         Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
+            log.warn("Registration attempt with used email: {}", request.getEmail());
             response.put("status", "error");
             response.put("message", "Email is already in use.");
             return response;
@@ -38,15 +42,14 @@ public class RegistrationService {
 
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(request.getPassword(), salt);
-
         User user = createUserFromRequest(request, hashedPassword);
         userRepository.save(user);
 
+        log.info("User registered successfully with email: {}", request.getEmail());
         response.put("status", "success");
         response.put("message", "Registration successful");
         return response;
     }
-
 
     private String validatePassword(String password, String passwordConfirm) {
         if (password.length() < 8) {

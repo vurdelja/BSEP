@@ -36,8 +36,6 @@ public class SecurityConfiguration{
                                 "/bsep/auth/register",
                                 "/bsep/auth/refresh-token",
                                 "/bsep/registration/**",
-                                "/bsep/commercial/all",
-                                "/bsep/commercial/create",
                                 "/bsep/user/**"
                                 ).permitAll() // Allow unauthenticated access to login
                         .anyRequest().authenticated())

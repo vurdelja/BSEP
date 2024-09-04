@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RegistrationService } from '../../services/registration.service';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -41,52 +42,43 @@ export class LoginComponent {
       alert('Unknown role: ' + role);
     }
   }
-
-  
   login() {
-    // Očistite stare tokene pre nego što pošaljete novi zahtev za prijavu
+    // Clear old tokens before sending a new login request
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
-  
-    if (!this.captchaToken || !this.customCaptchaResolved) {
-      alert('Please resolve the CAPTCHA first');
-      return;
-    }
-  
-    const credentials = {
-      email: this.email,
-      password: this.password,
-      captchaToken: this.captchaToken
-    };
-  
-    console.log('Sending login request with credentials:', credentials);
-  
-    this.registrationService.login(credentials).subscribe(
-      (response: any) => {
-        console.log(response);
-        alert('Login successful');
-  
-        localStorage.setItem('accessToken', response.accessToken);
-        localStorage.setItem('refreshToken', response.refreshToken);
-  
-        const userId = response.userId;  // Assume the response contains the user's ID
-        const userRole = response.role;  // Assume the response contains the user's role
-        if (userRole === 'ADMIN') {
-          this.router.navigate([`/admin/${userId}`]);  // Navigate to the admin profile page with user ID
-        } else if (userRole === 'EMPLOYEE') {
-          this.router.navigate([`/employee-profile/${userId}`]);  // Navigate to the employee profile page with user ID
-        } else if (userRole === 'USER') {
-          this.router.navigate([`/user-profile/${userId}`]);  // Navigate to the user profile page with user ID
-        } else {
-          alert('Invalid user role');
-        }
-      },
-      (error) => {
-        console.error('Login failed:', error);
-        alert('Login failed: ' + error.message);
-      }
-    );  
-  
 
-  }
+    if (!this.captchaToken || !this.customCaptchaResolved) {
+        alert('Please resolve the CAPTCHA first');
+        return;
+    }
+
+    const credentials = {
+        email: this.email,
+        password: this.password,
+        captchaToken: this.captchaToken
+    };
+
+    console.log('Sending login request with credentials:', credentials);
+
+    // Calling the login method from the service and subscribing to the observable it returns
+    this.registrationService.login(credentials).pipe(
+        tap((response: any) => {
+            // Storing the token received from the response in local storage
+            localStorage.setItem('accessToken', response.accessToken);
+            localStorage.setItem('refreshToken', response.refreshToken);
+            console.log('Token received and stored:', response.accessToken);
+        })
+    ).subscribe(
+        response => {
+            console.log('Navigating to user profile');
+            const userId = response.userId; // Assume the response contains the user's ID
+            // Navigate to the user profile page with user ID
+            this.router.navigate([`/user-profile/${userId}`]); 
+        },
+        error => {
+            console.error('Login failed:', error);
+            alert('Login failed: ' + error.message);
+        }
+    );
+}
 }

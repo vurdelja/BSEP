@@ -24,30 +24,24 @@ public class AuthenticationService {
     private final JwtService jwtService;
 
     public LoginResponse login(LoginRequest request) {
-        logger.info("Attempting to authenticate user with email: {}", request.getEmail());
+        logger.info("Attempting to authenticate user with email: [{}]", request.getEmail());
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getEmail(),
-                            request.getPassword()
-                    )
-            );
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (Exception e) {
-            logger.error("Authentication failed for user with email: {}", request.getEmail(), e);
-            throw e;
+            logger.error("Authentication failed for user with email: [{}], Error: {}", request.getEmail(), e.getMessage());
+            throw new RuntimeException("Authentication failed", e);
         }
 
-        var user = repository.findByEmail(request.getEmail())
-                .orElseThrow(() -> {
-                    logger.error("User not found with email: {}", request.getEmail());
-                    return new NoSuchElementException("User not found");
-                });
+        var user = repository.findByEmail(request.getEmail()).orElseThrow(() -> {
+            logger.error("User not found during login with email: [{}]", request.getEmail());
+            return new NoSuchElementException("User not found");
+        });
 
-        logger.info("User authenticated successfully, generating tokens...");
+        logger.info("User [{}] authenticated successfully, generating tokens.", user.getId());
         var accessToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
+        logger.info("Tokens generated for user [{}].", user.getId());
 
-        logger.info("Tokens generated successfully for user with email: {}", request.getEmail());
         return LoginResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
@@ -57,23 +51,36 @@ public class AuthenticationService {
     }
 
     public LoginResponse refreshAccessToken(String refreshToken) {
-        logger.info("Attempting to refresh access token");
-        if (jwtService.isTokenValid(refreshToken)) {
-            var username = jwtService.extractUsername(refreshToken);
-            var user = repository.findByEmail(username)
-                    .orElseThrow(() -> {
-                        logger.error("User not found with email extracted from refresh token: {}", username);
-                        return new NoSuchElementException("User not found");
-                    });
-            var accessToken = jwtService.generateToken(user);
-            logger.info("Access token refreshed successfully for user with email: {}", username);
-            return LoginResponse.builder()
-                    .accessToken(accessToken)
-                    .refreshToken(refreshToken)
-                    .build();
-        } else {
-            logger.error("Invalid refresh token");
-            throw new IllegalArgumentException("Invalid refresh token");
+        logger.info("Attempting to refresh access token for token: {}", refreshToken); // Careful with sensitive data, consider hashing if needed
+
+        // First, validate the refresh token
+        if (!jwtService.isTokenValid(refreshToken)) {
+            logger.warn("Attempt to refresh using an invalid refresh token: {}", refreshToken);
+            throw new SecurityException("Invalid refresh token provided");
         }
+
+        // Extract username and retrieve user details
+        String username = jwtService.extractUsername(refreshToken);
+        User user = repository.findByEmail(username)
+                .orElseThrow(() -> {
+                    logger.error("No user found with email [{}] during token refresh", username);
+                    return new NoSuchElementException("User not found with email: " + username);
+                });
+
+        // Generate new access token
+        String newAccessToken = jwtService.generateToken(user);
+        logger.info("Access token successfully refreshed for user [{}]", username);
+
+        // Optionally, if refresh tokens also need to be rotated
+        String newRefreshToken = jwtService.generateRefreshToken(user);
+
+        // Build and return the response
+        return LoginResponse.builder()
+                .accessToken(newAccessToken)
+                .refreshToken(newRefreshToken)  // Consider whether to rotate refresh tokens here
+                .role(user.getRole().name())
+                .userId(user.getId())
+                .build();
     }
+
 }

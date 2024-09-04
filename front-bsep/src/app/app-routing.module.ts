@@ -5,7 +5,6 @@ import { LoginComponent } from './components/login/login.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
 import { ProfilEditComponent } from './profil-edit/profil-edit/profil-edit.component';
-import { ComercialComponent } from './comercial/comercial/comercial.component';
 
 
 const routes: Routes = [
