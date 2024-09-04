@@ -13,4 +13,6 @@ public class LoginRequest {
     private String email;
     private String password; //private
     private String captchaToken; // Add this line
+    //private String totpCode; // Dodato polje za TOTP kod
+
 }

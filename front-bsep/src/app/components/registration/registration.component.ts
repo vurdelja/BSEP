@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RegistrationService } from '../../services/registration.service';
 import { Router } from '@angular/router';  
 import { FormsModule, NgForm } from '@angular/forms';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @Component({
   selector: 'app-registration',
@@ -23,7 +24,15 @@ export class RegistrationComponent {
   packageType: string = 'BASIC'; 
   userType: string = 'INDIVIDUAL';
 
+  qrCodeUrl: string | null = null; // For storing the QR code URL
+  isFormVisible: boolean = true; // Initially, the form is visible
+
   constructor(private registrationService: RegistrationService, private router: Router) {}
+
+   // Method to navigate to the login page
+   goToLogin() {
+    this.router.navigate(['/login']); // Adjust '/login' if your route is different
+  }
 
   save(form: NgForm) {
     if (form.invalid) {
@@ -46,15 +55,31 @@ export class RegistrationComponent {
       userType: this.userType
     };
 
+    
+    
+
     this.registrationService.registerUser(bodyData).subscribe(
       (resultData: any) => {
         console.log(resultData);
-        alert('Registered successfully.');
+        if (resultData.qrCodeUrl) {
+          this.qrCodeUrl = resultData.qrCodeUrl; // Save QR code URL
+          this.isFormVisible = false; // Hide the form to show the QR code section
+          alert('Registration successful. Please configure your 2FA by scanning the QR Code.');
+        } else {
+          alert('Registered successfully.');
+        }
       },
       (error) => {
         console.error(error);
-        alert('Unsuccessfull registration. ' + error.message);
+        alert('Unsuccessful registration. ' + error.message);
       }
     );
+
+    
+    
   }
+
+
+
+  
 }

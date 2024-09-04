@@ -13,6 +13,7 @@ import { ProfilEditComponent } from './profil-edit/profil-edit/profil-edit.compo
 import { RefreshTokenDialogComponent } from './refresh-token-dialog/refresh-token-dialog.component';
 import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { QRCodeModule } from 'angularx-qrcode';
 
 
 
@@ -33,7 +34,8 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    RecaptchaModule
+    RecaptchaModule,
+    QRCodeModule
   ],
   providers: [
     {

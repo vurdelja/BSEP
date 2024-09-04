@@ -5,6 +5,7 @@ import com.bsep.bezbednosttim32.auth.LoginRequest;
 import com.bsep.bezbednosttim32.model.User;
 import com.bsep.bezbednosttim32.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.jboss.aerogear.security.otp.Totp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,6 +50,7 @@ public class AuthenticationService {
                 .userId(user.getId())
                 .build();
     }
+
 
     public LoginResponse refreshAccessToken(String refreshToken) {
         logger.info("Attempting to refresh access token for token: {}", refreshToken); // Careful with sensitive data, consider hashing if needed

@@ -1,7 +1,7 @@
 <div class="container mt-4">
   <div class="card mx-auto" style="max-width: 600px;">
     <h1>User Registration</h1>
-    <form #registrationForm="ngForm" (ngSubmit)="save(registrationForm)">
+    <form *ngIf="isFormVisible" #registrationForm="ngForm" (ngSubmit)="save(registrationForm)">
       <div class="form-group">
         <label for="userType">User Type</label>
         <select [(ngModel)]="userType" name="userType" class="form-control" id="userType" required>
@@ -113,5 +113,17 @@
 
       <button type="submit" class="btn btn-primary">Register</button>
     </form>
+
+          
+      <!-- QR Code display section -->
+      <div *ngIf="!isFormVisible && qrCodeUrl" class="text-center">
+        <h2>Scan QR Code with your Authenticator App</h2>
+        <qrcode [qrdata]="qrCodeUrl" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+      </div>
+
+      <!-- Button to navigate to the login page -->
+      <button type="button" class="btn btn-link" (click)="goToLogin()">Go to Login</button>
+
+      
   </div>
 </div>

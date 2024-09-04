@@ -13,6 +13,7 @@ export class LoginComponent {
   password: string = '';
   captchaResolved: boolean = false;
   captchaToken: string | null = null;
+  totpCode: string | null = null;
   customCaptchaResolved: boolean = false;
   showCustomCaptcha: boolean = false;
 
@@ -55,7 +56,8 @@ export class LoginComponent {
     const credentials = {
         email: this.email,
         password: this.password,
-        captchaToken: this.captchaToken
+        captchaToken: this.captchaToken,
+        totpCode: this.totpCode
     };
 
     console.log('Sending login request with credentials:', credentials);

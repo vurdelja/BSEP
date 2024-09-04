@@ -5,6 +5,7 @@ import com.bsep.bezbednosttim32.model.Role;
 import com.bsep.bezbednosttim32.model.User;
 import com.bsep.bezbednosttim32.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.jboss.aerogear.security.otp.api.Base32;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -43,14 +44,28 @@ public class RegistrationService {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(request.getPassword(), salt);
         User user = createUserFromRequest(request, hashedPassword);
+
+        // Generate TOTP secret and QR code URL
+        String totpSecret = Base32.random();
+        response.put("Generated TOTP secret for user [{}]: [{}]", totpSecret); // Loguj generisani secret
+        user.setTotpSecret(totpSecret);
         userRepository.save(user);
+
+        String qrCodeUrl = generateQRCodeUrl(totpSecret, request.getEmail());
 
         log.info("User registered successfully with email: {}", request.getEmail());
         response.put("status", "success");
-        response.put("message", "Registration successful");
+        response.put("message", "Registration successful. Set up 2FA by scanning the QR code.");
+        response.put("qrCodeUrl", qrCodeUrl); // Provide QR code URL for TOTP setup
+
         return response;
     }
 
+    private String generateQRCodeUrl(String secret, String email) {
+        // Assuming your application's name is your 'issuer'
+        String issuer = "BezbednostTim32";
+        return String.format("otpauth://totp/%s:%s?secret=%s&issuer=%s", issuer, email, secret, issuer);
+    }
     private String validatePassword(String password, String passwordConfirm) {
         if (password.length() < 8) {
             return "Password must be at least 8 characters long";
