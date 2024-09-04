@@ -38,7 +38,11 @@ public class SecurityConfiguration{
                                 "/bsep/registration/**",
                                 "/bsep/user/**"
                                 ).permitAll() // Allow unauthenticated access to login
+                        // Restrict admin-specific endpoints to only users with the ADMIN role
+                        .requestMatchers("/admin/**").hasRole("ADMIN")  // Only ADMIN can access /admin routes
+
                         .anyRequest().authenticated())
+
 
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

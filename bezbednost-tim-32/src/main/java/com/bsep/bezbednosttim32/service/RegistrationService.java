@@ -3,6 +3,7 @@ package com.bsep.bezbednosttim32.service;
 import com.bsep.bezbednosttim32.auth.RegisterRequest;
 import com.bsep.bezbednosttim32.model.Role;
 import com.bsep.bezbednosttim32.model.User;
+import com.bsep.bezbednosttim32.repository.RoleRepository;
 import com.bsep.bezbednosttim32.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.jboss.aerogear.security.otp.api.Base32;
@@ -10,10 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +22,7 @@ import javax.crypto.SecretKey;
 @AllArgsConstructor
 public class RegistrationService {
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private static final Logger log = LoggerFactory.getLogger(RegistrationService.class);
 
     public Map<String, Object> registerUser(RegisterRequest request) throws Exception {
@@ -50,23 +49,29 @@ public class RegistrationService {
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(request.getPassword(), salt);
 
-        // Generisanje ključa i IV za šifrovanje adrese
+        // Fetch the 'USER' role from the database
+        Role userRole = roleRepository.findByName("USER");
+        if (userRole == null) {
+            log.error("Role 'USER' not found in the database. Make sure the role is created.");
+            throw new RuntimeException("Role 'USER' not found");
+        }
+
+        // Generating encryption key and IV for address encryption
         SecretKey encryptionKey = EncryptionUtils.generateAESKey();
-        byte[] iv = new byte[12]; // Generiši IV, u ovom primeru je fiksna dužina
+        byte[] iv = new byte[12];
         SecureRandom secureRandom = new SecureRandom();
         secureRandom.nextBytes(iv);
 
-        // Šifrovanje adrese
+        // Encrypting the user's address
         String encryptedAddress = EncryptionUtils.encrypt(request.getAddress(), encryptionKey, iv);
 
-        // Kreiranje korisnika sa plain-text emailom i šifrovanom adresom
+        // Creating the user with encrypted address and setting the role
         User user = createUserFromRequest(request, hashedPassword);
-        user.setEmail(request.getEmail()); // Email ostaje plain-text
-        user.setAddress(encryptedAddress); // Adresa se šifruje
-
-        // Čuvanje šifrovanog ključa i IV u bazi podataka
+        user.setEmail(request.getEmail());
+        user.setAddress(encryptedAddress);
         user.setEncryptionKey(Base64.getEncoder().encodeToString(encryptionKey.getEncoded()));
         user.setIv(Base64.getEncoder().encodeToString(iv));
+        user.setRoles(Set.of(userRole)); // Assigning the 'USER' role
 
         userRepository.save(user);
         log.info("User registered successfully with email: {}", request.getEmail());
@@ -101,8 +106,7 @@ public class RegistrationService {
     private User createUserFromRequest(RegisterRequest request, String hashedPassword) {
         return User.builder()
                 .email(request.getEmail())
-                .password(hashedPassword) // Store hashed password with salt
-                .role(Role.USER)
+                .password(hashedPassword)
                 .address(request.getAddress())
                 .city(request.getCity())
                 .country(request.getCountry())
@@ -115,4 +119,5 @@ public class RegistrationService {
                 .packageType(request.getPackageType())
                 .build();
     }
+
 }

@@ -1,10 +1,7 @@
 package com.bsep.bezbednosttim32.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.jboss.aerogear.security.otp.api.Base32;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -20,8 +19,9 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String email;
@@ -35,26 +35,30 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    private String firstName; // individual
-    private String lastName; //individual
-    private String companyName; // legal entities
-    private String pib; // legal entities
+    private String firstName;
+    private String lastName;
+    private String companyName;
+    private String pib;
 
     @Enumerated(EnumType.STRING)
     private PackageType packageType;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
     private String totpSecret;
 
-    // Novo polje za čuvanje šifrovanog ključa
-    @Column(name = "encryption_key", length = 512)
-    private String encryptionKey;  // Čuva šifrovani ključ u bazi kao Base64
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 
-    // Novo polje za čuvanje IV (inicijalizacionog vektora)
+    // Encryption fields
+    @Column(name = "encryption_key", length = 512)
+    private String encryptionKey;
+
     @Column(name = "iv", length = 64)
-    private String iv;  // Čuva IV u bazi kao Base64
+    private String iv;
 
     @PrePersist
     public void prePersist() {
@@ -63,7 +67,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return roles.stream()
+                .flatMap(role -> role.getPermissions().stream())
+                .map(permission -> new SimpleGrantedAuthority(permission.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -96,4 +103,3 @@ public class User implements UserDetails {
         return true;
     }
 }
-

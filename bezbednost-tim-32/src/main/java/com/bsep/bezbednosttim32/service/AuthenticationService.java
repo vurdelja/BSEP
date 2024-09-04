@@ -3,6 +3,7 @@ package com.bsep.bezbednosttim32.service;
 import com.bsep.bezbednosttim32.auth.LoginResponse;
 import com.bsep.bezbednosttim32.auth.LoginRequest;
 import com.bsep.bezbednosttim32.model.User;
+import com.bsep.bezbednosttim32.model.Role;
 import com.bsep.bezbednosttim32.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.jboss.aerogear.security.otp.Totp;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,9 +51,12 @@ public class AuthenticationService {
         return LoginResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .role(user.getRole().name())
+                .role(user.getRoles().stream()
+                        .map(Role::getName)  // Get the name of each role
+                        .collect(Collectors.joining(",")))  // Combine roles into a single string
                 .userId(user.getId())
                 .build();
+
     }
 
 
@@ -79,11 +84,13 @@ public class AuthenticationService {
         // Optionally, if refresh tokens also need to be rotated
         String newRefreshToken = jwtService.generateRefreshToken(user);
 
-        // Build and return the response
+
         return LoginResponse.builder()
                 .accessToken(newAccessToken)
-                .refreshToken(newRefreshToken)  // Consider whether to rotate refresh tokens here
-                .role(user.getRole().name())
+                .refreshToken(newRefreshToken)
+                .role(user.getRoles().stream()
+                        .map(Role::getName)  // Get the name of each role
+                        .collect(Collectors.joining(",")))  // Combine roles into a single string
                 .userId(user.getId())
                 .build();
     }
