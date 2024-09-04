@@ -48,6 +48,14 @@ public class User implements UserDetails {
 
     private String totpSecret;
 
+    // Novo polje za čuvanje šifrovanog ključa
+    @Column(name = "encryption_key", length = 512)
+    private String encryptionKey;  // Čuva šifrovani ključ u bazi kao Base64
+
+    // Novo polje za čuvanje IV (inicijalizacionog vektora)
+    @Column(name = "iv", length = 64)
+    private String iv;  // Čuva IV u bazi kao Base64
+
     @PrePersist
     public void prePersist() {
         totpSecret = Base32.random(); // Generate and store a TOTP secret when user is created

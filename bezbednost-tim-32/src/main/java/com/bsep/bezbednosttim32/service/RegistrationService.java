@@ -9,18 +9,24 @@ import org.jboss.aerogear.security.otp.api.Base32;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.crypto.SecretKey;
+
 @Service
 @AllArgsConstructor
 public class RegistrationService {
     private final UserRepository userRepository;
     private static final Logger log = LoggerFactory.getLogger(RegistrationService.class);
-    public Map<String, Object> registerUser(RegisterRequest request) {
+
+    public Map<String, Object> registerUser(RegisterRequest request) throws Exception {
         log.debug("Registering new user with email: {}", request.getEmail());
 
         Map<String, Object> response = new HashMap<>();
@@ -43,23 +49,33 @@ public class RegistrationService {
 
         String salt = BCrypt.gensalt();
         String hashedPassword = BCrypt.hashpw(request.getPassword(), salt);
+
+        // Generisanje ključa i IV za šifrovanje adrese
+        SecretKey encryptionKey = EncryptionUtils.generateAESKey();
+        byte[] iv = new byte[12]; // Generiši IV, u ovom primeru je fiksna dužina
+        SecureRandom secureRandom = new SecureRandom();
+        secureRandom.nextBytes(iv);
+
+        // Šifrovanje adrese
+        String encryptedAddress = EncryptionUtils.encrypt(request.getAddress(), encryptionKey, iv);
+
+        // Kreiranje korisnika sa plain-text emailom i šifrovanom adresom
         User user = createUserFromRequest(request, hashedPassword);
+        user.setEmail(request.getEmail()); // Email ostaje plain-text
+        user.setAddress(encryptedAddress); // Adresa se šifruje
 
-        // Generate TOTP secret and QR code URL
-        String totpSecret = Base32.random();
-        response.put("Generated TOTP secret for user [{}]: [{}]", totpSecret); // Loguj generisani secret
-        user.setTotpSecret(totpSecret);
+        // Čuvanje šifrovanog ključa i IV u bazi podataka
+        user.setEncryptionKey(Base64.getEncoder().encodeToString(encryptionKey.getEncoded()));
+        user.setIv(Base64.getEncoder().encodeToString(iv));
+
         userRepository.save(user);
-
-        String qrCodeUrl = generateQRCodeUrl(totpSecret, request.getEmail());
-
         log.info("User registered successfully with email: {}", request.getEmail());
-        response.put("status", "success");
-        response.put("message", "Registration successful. Set up 2FA by scanning the QR code.");
-        response.put("qrCodeUrl", qrCodeUrl); // Provide QR code URL for TOTP setup
 
+        response.put("status", "success");
+        response.put("message", "Registration successful.");
         return response;
     }
+
 
     private String generateQRCodeUrl(String secret, String email) {
         // Assuming your application's name is your 'issuer'

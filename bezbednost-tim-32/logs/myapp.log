@@ -553,3 +553,294 @@ io.jsonwebtoken.ExpiredJwtException: JWT expired at 2024-09-04T02:46:11Z. Curren
 2024-09-04 20:38:30 - INFO - [http-nio-8080-exec-1] - c.b.b.c.ApplicationConfig - Loading user by username: testiranje@gmail.com
 2024-09-04 20:38:30 - INFO - [http-nio-8080-exec-1] - c.b.b.s.AuthenticationService - User [352] authenticated successfully, generating tokens.
 2024-09-04 20:38:30 - INFO - [http-nio-8080-exec-1] - c.b.b.s.AuthenticationService - Tokens generated for user [352].
+2024-09-04 20:52:21 - INFO - [SpringApplicationShutdownHook] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 20:52:21 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-09-04 20:52:21 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-09-04 20:52:36 - INFO - [main] - c.b.b.BezbednostTim32Application - Starting BezbednostTim32Application using Java 22 with PID 17952 (C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes started by Katarina in C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32)
+2024-09-04 20:52:36 - INFO - [main] - c.b.b.BezbednostTim32Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 20:52:38 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 20:52:38 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 91 ms. Found 1 JPA repository interface.
+2024-09-04 20:52:39 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-09-04 20:52:39 - INFO - [main] - o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-09-04 20:52:39 - INFO - [main] - o.a.c.c.StandardService - Starting service [Tomcat]
+2024-09-04 20:52:39 - INFO - [main] - o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-09-04 20:52:39 - INFO - [main] - o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 20:52:39 - INFO - [main] - o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3310 ms
+2024-09-04 20:52:39 - INFO - [main] - o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 20:52:40 - INFO - [main] - o.h.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-09-04 20:52:40 - INFO - [main] - o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 20:52:40 - INFO - [main] - o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 20:52:40 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2024-09-04 20:52:41 - INFO - [main] - c.z.h.p.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@305e95a4
+2024-09-04 20:52:41 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2024-09-04 20:52:41 - WARN - [main] - o.h.o.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-04 20:52:43 - INFO - [main] - o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 20:52:43 - INFO - [main] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 20:52:44 - WARN - [main] - o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'authenticationController' defined in file [C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes\com\bsep\bezbednosttim32\controller\AuthenticationController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'authenticationService' defined in file [C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes\com\bsep\bezbednosttim32\service\AuthenticationService.class]: Unsatisfied dependency expressed through constructor parameter 3: No qualifying bean of type 'javax.crypto.SecretKey' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2024-09-04 20:52:44 - INFO - [main] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 20:52:44 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-09-04 20:52:44 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-09-04 20:52:44 - INFO - [main] - o.a.c.c.StandardService - Stopping service [Tomcat]
+2024-09-04 20:52:44 - INFO - [main] - o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-09-04 20:52:44 - ERROR - [main] - o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 3 of constructor in com.bsep.bezbednosttim32.service.AuthenticationService required a bean of type 'javax.crypto.SecretKey' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'javax.crypto.SecretKey' in your configuration.
+
+2024-09-04 20:54:00 - INFO - [main] - c.b.b.BezbednostTim32Application - Starting BezbednostTim32Application using Java 22 with PID 21024 (C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes started by Katarina in C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32)
+2024-09-04 20:54:00 - INFO - [main] - c.b.b.BezbednostTim32Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 20:54:02 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 20:54:02 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 107 ms. Found 1 JPA repository interface.
+2024-09-04 20:54:03 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-09-04 20:54:03 - INFO - [main] - o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-09-04 20:54:03 - INFO - [main] - o.a.c.c.StandardService - Starting service [Tomcat]
+2024-09-04 20:54:03 - INFO - [main] - o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-09-04 20:54:03 - INFO - [main] - o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 20:54:03 - INFO - [main] - o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2736 ms
+2024-09-04 20:54:04 - INFO - [main] - o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 20:54:04 - INFO - [main] - o.h.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-09-04 20:54:04 - INFO - [main] - o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 20:54:04 - INFO - [main] - o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 20:54:04 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2024-09-04 20:54:05 - INFO - [main] - c.z.h.p.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@55061418
+2024-09-04 20:54:05 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2024-09-04 20:54:05 - WARN - [main] - o.h.o.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-04 20:54:06 - INFO - [main] - o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 20:54:06 - INFO - [main] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 20:54:07 - WARN - [main] - o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userController' defined in file [C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes\com\bsep\bezbednosttim32\controller\UserController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'userService' defined in file [C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes\com\bsep\bezbednosttim32\service\UserService.class]: Unsatisfied dependency expressed through constructor parameter 1: No qualifying bean of type 'javax.crypto.SecretKey' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {}
+2024-09-04 20:54:07 - INFO - [main] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 20:54:07 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-09-04 20:54:07 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-09-04 20:54:07 - INFO - [main] - o.a.c.c.StandardService - Stopping service [Tomcat]
+2024-09-04 20:54:07 - INFO - [main] - o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-09-04 20:54:07 - ERROR - [main] - o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 1 of constructor in com.bsep.bezbednosttim32.service.UserService required a bean of type 'javax.crypto.SecretKey' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'javax.crypto.SecretKey' in your configuration.
+
+2024-09-04 20:54:42 - INFO - [main] - c.b.b.BezbednostTim32Application - Starting BezbednostTim32Application using Java 22 with PID 12992 (C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes started by Katarina in C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32)
+2024-09-04 20:54:42 - INFO - [main] - c.b.b.BezbednostTim32Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 20:54:43 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 20:54:43 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 89 ms. Found 1 JPA repository interface.
+2024-09-04 20:54:45 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-09-04 20:54:45 - INFO - [main] - o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-09-04 20:54:45 - INFO - [main] - o.a.c.c.StandardService - Starting service [Tomcat]
+2024-09-04 20:54:45 - INFO - [main] - o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-09-04 20:54:45 - INFO - [main] - o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 20:54:45 - INFO - [main] - o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3195 ms
+2024-09-04 20:54:45 - INFO - [main] - o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 20:54:45 - INFO - [main] - o.h.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-09-04 20:54:45 - INFO - [main] - o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 20:54:46 - INFO - [main] - o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 20:54:46 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2024-09-04 20:54:46 - INFO - [main] - c.z.h.p.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@498a4d62
+2024-09-04 20:54:46 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2024-09-04 20:54:46 - WARN - [main] - o.h.o.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-04 20:54:48 - INFO - [main] - o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 20:54:48 - INFO - [main] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 20:54:49 - WARN - [main] - o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 20:54:50 - INFO - [main] - o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6418075c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@f9919a2, org.springframework.security.web.context.SecurityContextHolderFilter@599fab92, org.springframework.security.web.header.HeaderWriterFilter@25291901, org.springframework.web.filter.CorsFilter@530ee11a, org.springframework.security.web.authentication.logout.LogoutFilter@5dfb078, com.bsep.bezbednosttim32.config.JwtAuthenticationFilter@36ec4071, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4fc1eee5, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@120661d2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@54d116d5, org.springframework.security.web.session.SessionManagementFilter@685e5967, org.springframework.security.web.access.ExceptionTranslationFilter@32f243f, org.springframework.security.web.access.intercept.AuthorizationFilter@1d6ed085]
+2024-09-04 20:54:51 - INFO - [main] - o.a.c.h.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-09-04 20:54:51 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-09-04 20:54:51 - INFO - [main] - c.b.b.BezbednostTim32Application - Started BezbednostTim32Application in 10.041 seconds (process running for 11.344)
+2024-09-04 20:55:50 - INFO - [http-nio-8080-exec-1] - o.a.c.c.C.[.[.[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-04 20:55:50 - INFO - [http-nio-8080-exec-1] - o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-04 20:55:50 - INFO - [http-nio-8080-exec-1] - o.s.w.s.DispatcherServlet - Completed initialization in 3 ms
+2024-09-04 20:55:50 - INFO - [http-nio-8080-exec-2] - c.b.b.s.RegistrationService - User registered successfully with email: sifrovanje@gmail.com
+2024-09-04 20:57:29 - INFO - [http-nio-8080-exec-4] - c.b.b.s.AuthenticationService - Attempting to authenticate user with email: [sifrovanje@gmail.com]
+2024-09-04 20:57:29 - INFO - [http-nio-8080-exec-4] - c.b.b.c.ApplicationConfig - Loading user by username: sifrovanje@gmail.com
+2024-09-04 20:57:29 - ERROR - [http-nio-8080-exec-4] - c.b.b.c.ApplicationConfig - User not found with email: sifrovanje@gmail.com
+2024-09-04 20:57:29 - ERROR - [http-nio-8080-exec-4] - c.b.b.s.AuthenticationService - Authentication failed for user with email: [sifrovanje@gmail.com], Error: Bad credentials
+2024-09-04 21:04:44 - INFO - [SpringApplicationShutdownHook] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 21:04:44 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-09-04 21:04:44 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-09-04 21:04:52 - INFO - [main] - c.b.b.BezbednostTim32Application - Starting BezbednostTim32Application using Java 22 with PID 21728 (C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes started by Katarina in C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32)
+2024-09-04 21:04:52 - INFO - [main] - c.b.b.BezbednostTim32Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 21:04:54 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 21:04:54 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 91 ms. Found 1 JPA repository interface.
+2024-09-04 21:04:55 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-09-04 21:04:55 - INFO - [main] - o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-09-04 21:04:55 - INFO - [main] - o.a.c.c.StandardService - Starting service [Tomcat]
+2024-09-04 21:04:55 - INFO - [main] - o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-09-04 21:04:56 - INFO - [main] - o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 21:04:56 - INFO - [main] - o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3100 ms
+2024-09-04 21:04:56 - INFO - [main] - o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 21:04:56 - INFO - [main] - o.h.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-09-04 21:04:56 - INFO - [main] - o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 21:04:57 - INFO - [main] - o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 21:04:57 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2024-09-04 21:04:57 - INFO - [main] - c.z.h.p.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6fbe4800
+2024-09-04 21:04:57 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2024-09-04 21:04:57 - WARN - [main] - o.h.o.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-04 21:04:59 - INFO - [main] - o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 21:04:59 - INFO - [main] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 21:05:00 - WARN - [main] - o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 21:05:01 - INFO - [main] - o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@121b7a95, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7aa62a90, org.springframework.security.web.context.SecurityContextHolderFilter@5fdcc63f, org.springframework.security.web.header.HeaderWriterFilter@535adf36, org.springframework.web.filter.CorsFilter@23ee31b8, org.springframework.security.web.authentication.logout.LogoutFilter@14f1545c, com.bsep.bezbednosttim32.config.JwtAuthenticationFilter@590f806a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@473c491, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3ede428e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5fc42998, org.springframework.security.web.session.SessionManagementFilter@5dfb078, org.springframework.security.web.access.ExceptionTranslationFilter@2e68bd3d, org.springframework.security.web.access.intercept.AuthorizationFilter@14af9f51]
+2024-09-04 21:05:01 - INFO - [main] - o.a.c.h.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-09-04 21:05:01 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-09-04 21:05:01 - INFO - [main] - c.b.b.BezbednostTim32Application - Started BezbednostTim32Application in 9.817 seconds (process running for 11.322)
+2024-09-04 21:11:28 - INFO - [http-nio-8080-exec-1] - o.a.c.c.C.[.[.[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-04 21:11:28 - INFO - [http-nio-8080-exec-1] - o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-04 21:11:28 - INFO - [http-nio-8080-exec-1] - o.s.w.s.DispatcherServlet - Completed initialization in 25 ms
+2024-09-04 21:11:29 - INFO - [http-nio-8080-exec-1] - c.b.b.s.RegistrationService - User registered successfully with email: testic@gmail.com
+2024-09-04 21:11:45 - INFO - [http-nio-8080-exec-2] - c.b.b.s.AuthenticationService - Attempting to authenticate user with email: [testic@gmail.com]
+2024-09-04 21:11:45 - ERROR - [http-nio-8080-exec-2] - c.b.b.s.AuthenticationService - User not found during login with email: [testic@gmail.com]
+2024-09-04 21:12:22 - INFO - [SpringApplicationShutdownHook] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 21:12:22 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-09-04 21:12:22 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-09-04 21:12:26 - INFO - [main] - c.b.b.BezbednostTim32Application - Starting BezbednostTim32Application using Java 22 with PID 8968 (C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes started by Katarina in C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32)
+2024-09-04 21:12:26 - INFO - [main] - c.b.b.BezbednostTim32Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 21:12:28 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 21:12:28 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 97 ms. Found 1 JPA repository interface.
+2024-09-04 21:12:29 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-09-04 21:12:29 - INFO - [main] - o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-09-04 21:12:29 - INFO - [main] - o.a.c.c.StandardService - Starting service [Tomcat]
+2024-09-04 21:12:29 - INFO - [main] - o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-09-04 21:12:29 - INFO - [main] - o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 21:12:29 - INFO - [main] - o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3259 ms
+2024-09-04 21:12:30 - INFO - [main] - o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 21:12:30 - INFO - [main] - o.h.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-09-04 21:12:30 - INFO - [main] - o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 21:12:31 - INFO - [main] - o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 21:12:31 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2024-09-04 21:12:31 - INFO - [main] - c.z.h.p.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@528e5e38
+2024-09-04 21:12:31 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2024-09-04 21:12:31 - WARN - [main] - o.h.o.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-04 21:12:33 - INFO - [main] - o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 21:12:33 - INFO - [main] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 21:12:34 - WARN - [main] - o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 21:12:34 - INFO - [main] - o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@18b88f7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@128ebca1, org.springframework.security.web.context.SecurityContextHolderFilter@2cc82c83, org.springframework.security.web.header.HeaderWriterFilter@18baee88, org.springframework.web.filter.CorsFilter@34128fed, org.springframework.security.web.authentication.logout.LogoutFilter@671c71e8, com.bsep.bezbednosttim32.config.JwtAuthenticationFilter@506e382b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5f3bc119, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1b9cfc19, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@10efb806, org.springframework.security.web.session.SessionManagementFilter@7715d43c, org.springframework.security.web.access.ExceptionTranslationFilter@121f97fb, org.springframework.security.web.access.intercept.AuthorizationFilter@37c49a55]
+2024-09-04 21:12:35 - INFO - [main] - o.a.c.h.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-09-04 21:12:35 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-09-04 21:12:35 - INFO - [main] - c.b.b.BezbednostTim32Application - Started BezbednostTim32Application in 9.917 seconds (process running for 11.441)
+2024-09-04 21:12:52 - INFO - [http-nio-8080-exec-1] - o.a.c.c.C.[.[.[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-04 21:12:52 - INFO - [http-nio-8080-exec-1] - o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-04 21:12:52 - INFO - [http-nio-8080-exec-1] - o.s.w.s.DispatcherServlet - Completed initialization in 3 ms
+2024-09-04 21:12:53 - INFO - [http-nio-8080-exec-1] - c.b.b.s.AuthenticationService - Attempting to authenticate user with email: [testic@gmail.com]
+2024-09-04 21:12:53 - ERROR - [http-nio-8080-exec-1] - c.b.b.s.AuthenticationService - User not found during login with email: [testic@gmail.com]
+2024-09-04 21:13:01 - INFO - [http-nio-8080-exec-3] - c.b.b.s.AuthenticationService - Attempting to authenticate user with email: [testic@gmail.com]
+2024-09-04 21:13:01 - ERROR - [http-nio-8080-exec-3] - c.b.b.s.AuthenticationService - User not found during login with email: [testic@gmail.com]
+2024-09-04 21:14:33 - INFO - [http-nio-8080-exec-5] - c.b.b.s.AuthenticationService - Attempting to authenticate user with email: [testic@gmail.com]
+2024-09-04 21:14:33 - ERROR - [http-nio-8080-exec-5] - c.b.b.s.AuthenticationService - User not found during login with email: [testic@gmail.com]
+2024-09-04 21:17:15 - INFO - [SpringApplicationShutdownHook] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 21:17:15 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-09-04 21:17:15 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-09-04 21:17:23 - INFO - [main] - c.b.b.BezbednostTim32Application - Starting BezbednostTim32Application using Java 22 with PID 1764 (C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes started by Katarina in C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32)
+2024-09-04 21:17:23 - INFO - [main] - c.b.b.BezbednostTim32Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 21:17:25 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 21:17:25 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 104 ms. Found 1 JPA repository interface.
+2024-09-04 21:17:26 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-09-04 21:17:26 - INFO - [main] - o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-09-04 21:17:26 - INFO - [main] - o.a.c.c.StandardService - Starting service [Tomcat]
+2024-09-04 21:17:26 - INFO - [main] - o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-09-04 21:17:26 - INFO - [main] - o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 21:17:26 - INFO - [main] - o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2854 ms
+2024-09-04 21:17:26 - INFO - [main] - o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 21:17:27 - INFO - [main] - o.h.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-09-04 21:17:27 - INFO - [main] - o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 21:17:27 - INFO - [main] - o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 21:17:27 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2024-09-04 21:17:28 - INFO - [main] - c.z.h.p.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6ec3d8e4
+2024-09-04 21:17:28 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2024-09-04 21:17:28 - WARN - [main] - o.h.o.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-04 21:17:30 - INFO - [main] - o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 21:17:30 - INFO - [main] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 21:17:30 - WARN - [main] - o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 21:17:31 - INFO - [main] - o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1eaf4e77, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@23cfc9eb, org.springframework.security.web.context.SecurityContextHolderFilter@4c90fc3b, org.springframework.security.web.header.HeaderWriterFilter@5f3bc119, org.springframework.web.filter.CorsFilter@14af9f51, org.springframework.security.web.authentication.logout.LogoutFilter@2a728076, com.bsep.bezbednosttim32.config.JwtAuthenticationFilter@6dadcf58, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5dfb078, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2d21d12b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2bfe4df9, org.springframework.security.web.session.SessionManagementFilter@4fa3bebe, org.springframework.security.web.access.ExceptionTranslationFilter@2cc82c83, org.springframework.security.web.access.intercept.AuthorizationFilter@1315d910]
+2024-09-04 21:17:32 - INFO - [main] - o.a.c.h.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-09-04 21:17:32 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-09-04 21:17:32 - INFO - [main] - c.b.b.BezbednostTim32Application - Started BezbednostTim32Application in 9.541 seconds (process running for 10.976)
+2024-09-04 21:18:04 - INFO - [http-nio-8080-exec-1] - o.a.c.c.C.[.[.[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-04 21:18:04 - INFO - [http-nio-8080-exec-1] - o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-04 21:18:04 - INFO - [http-nio-8080-exec-1] - o.s.w.s.DispatcherServlet - Completed initialization in 3 ms
+2024-09-04 21:18:04 - INFO - [http-nio-8080-exec-1] - c.b.b.s.AuthenticationService - Attempting to authenticate user with email: [testic@gmail.com]
+2024-09-04 21:18:05 - ERROR - [http-nio-8080-exec-1] - c.b.b.s.AuthenticationService - User not found during login with email: [testic@gmail.com]
+2024-09-04 21:48:51 - INFO - [SpringApplicationShutdownHook] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 21:48:51 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-09-04 21:48:51 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-09-04 21:49:01 - INFO - [main] - c.b.b.BezbednostTim32Application - Starting BezbednostTim32Application using Java 22 with PID 4480 (C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes started by Katarina in C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32)
+2024-09-04 21:49:01 - INFO - [main] - c.b.b.BezbednostTim32Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 21:49:03 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 21:49:03 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 100 ms. Found 1 JPA repository interface.
+2024-09-04 21:49:05 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-09-04 21:49:05 - INFO - [main] - o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-09-04 21:49:05 - INFO - [main] - o.a.c.c.StandardService - Starting service [Tomcat]
+2024-09-04 21:49:05 - INFO - [main] - o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-09-04 21:49:05 - INFO - [main] - o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 21:49:05 - INFO - [main] - o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3506 ms
+2024-09-04 21:49:05 - INFO - [main] - o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 21:49:06 - INFO - [main] - o.h.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-09-04 21:49:06 - INFO - [main] - o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 21:49:06 - INFO - [main] - o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 21:49:07 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2024-09-04 21:49:07 - INFO - [main] - c.z.h.p.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@71e7830a
+2024-09-04 21:49:07 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2024-09-04 21:49:07 - WARN - [main] - o.h.o.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-04 21:49:10 - INFO - [main] - o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 21:49:10 - INFO - [main] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 21:49:11 - WARN - [main] - o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 21:49:12 - INFO - [main] - o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7057d9f4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@37c49a55, org.springframework.security.web.context.SecurityContextHolderFilter@36618b3b, org.springframework.security.web.header.HeaderWriterFilter@4e2ad1f2, org.springframework.web.filter.CorsFilter@13e6ab86, org.springframework.security.web.authentication.logout.LogoutFilter@27f8f1cc, com.bsep.bezbednosttim32.config.JwtAuthenticationFilter@522f74a1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3763aafd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@16ca4532, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4f5d7091, org.springframework.security.web.session.SessionManagementFilter@439054a7, org.springframework.security.web.access.ExceptionTranslationFilter@701996e9, org.springframework.security.web.access.intercept.AuthorizationFilter@f9919a2]
+2024-09-04 21:49:12 - INFO - [main] - o.a.c.h.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-09-04 21:49:13 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-09-04 21:49:13 - INFO - [main] - c.b.b.BezbednostTim32Application - Started BezbednostTim32Application in 12.691 seconds (process running for 14.712)
+2024-09-04 21:51:56 - INFO - [SpringApplicationShutdownHook] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 21:51:56 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2024-09-04 21:51:56 - INFO - [SpringApplicationShutdownHook] - c.z.h.HikariDataSource - HikariPool-1 - Shutdown completed.
+2024-09-04 21:52:03 - INFO - [main] - c.b.b.BezbednostTim32Application - Starting BezbednostTim32Application using Java 22 with PID 22280 (C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32\target\classes started by Katarina in C:\Users\Katarina\Desktop\bsep-ra-septembar-vurdelja\bezbednost-tim-32)
+2024-09-04 21:52:03 - INFO - [main] - c.b.b.BezbednostTim32Application - No active profile set, falling back to 1 default profile: "default"
+2024-09-04 21:52:05 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-04 21:52:05 - INFO - [main] - o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 107 ms. Found 1 JPA repository interface.
+2024-09-04 21:52:06 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2024-09-04 21:52:06 - INFO - [main] - o.a.c.h.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2024-09-04 21:52:06 - INFO - [main] - o.a.c.c.StandardService - Starting service [Tomcat]
+2024-09-04 21:52:06 - INFO - [main] - o.a.c.c.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.20]
+2024-09-04 21:52:06 - INFO - [main] - o.a.c.c.C.[.[.[/] - Initializing Spring embedded WebApplicationContext
+2024-09-04 21:52:06 - INFO - [main] - o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3057 ms
+2024-09-04 21:52:07 - INFO - [main] - o.h.j.i.u.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-04 21:52:07 - INFO - [main] - o.h.Version - HHH000412: Hibernate ORM core version 6.4.4.Final
+2024-09-04 21:52:07 - INFO - [main] - o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2024-09-04 21:52:07 - INFO - [main] - o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-04 21:52:08 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Starting...
+2024-09-04 21:52:08 - INFO - [main] - c.z.h.p.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4ae49387
+2024-09-04 21:52:08 - INFO - [main] - c.z.h.HikariDataSource - HikariPool-1 - Start completed.
+2024-09-04 21:52:08 - WARN - [main] - o.h.o.deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-04 21:52:10 - INFO - [main] - o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-04 21:52:10 - INFO - [main] - o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-04 21:52:10 - WARN - [main] - o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-09-04 21:52:11 - INFO - [main] - o.s.s.w.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4dfe56dc, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2a728076, org.springframework.security.web.context.SecurityContextHolderFilter@765d67dd, org.springframework.security.web.header.HeaderWriterFilter@40477d52, org.springframework.web.filter.CorsFilter@a3f1f32, org.springframework.security.web.authentication.logout.LogoutFilter@66ab3716, com.bsep.bezbednosttim32.config.JwtAuthenticationFilter@506e382b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2fda92e0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@535adf36, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@67fda9fb, org.springframework.security.web.session.SessionManagementFilter@75a5a912, org.springframework.security.web.access.ExceptionTranslationFilter@37289e90, org.springframework.security.web.access.intercept.AuthorizationFilter@128ebca1]
+2024-09-04 21:52:12 - INFO - [main] - o.a.c.h.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2024-09-04 21:52:12 - INFO - [main] - o.s.b.w.e.t.TomcatWebServer - Tomcat started on port 8080 (http) with context path ''
+2024-09-04 21:52:12 - INFO - [main] - c.b.b.BezbednostTim32Application - Started BezbednostTim32Application in 9.681 seconds (process running for 11.109)
+2024-09-04 21:54:06 - INFO - [http-nio-8080-exec-1] - o.a.c.c.C.[.[.[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-04 21:54:06 - INFO - [http-nio-8080-exec-1] - o.s.w.s.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2024-09-04 21:54:06 - INFO - [http-nio-8080-exec-1] - o.s.w.s.DispatcherServlet - Completed initialization in 6 ms
+2024-09-04 21:54:07 - WARN - [http-nio-8080-exec-1] - c.b.b.s.RegistrationService - Password validation failed for user skr@gmail.com: Passwords do not match
+2024-09-04 21:54:34 - INFO - [http-nio-8080-exec-3] - c.b.b.s.RegistrationService - User registered successfully with email: skr@gmail.com
+2024-09-04 21:55:01 - INFO - [http-nio-8080-exec-5] - c.b.b.s.AuthenticationService - Attempting to authenticate user with email: [skr@gmail.com]
+2024-09-04 21:55:01 - INFO - [http-nio-8080-exec-5] - c.b.b.c.ApplicationConfig - Loading user by username: skr@gmail.com
+2024-09-04 21:55:01 - INFO - [http-nio-8080-exec-5] - c.b.b.s.AuthenticationService - User [552] authenticated successfully, generating tokens.
+2024-09-04 21:55:01 - INFO - [http-nio-8080-exec-5] - c.b.b.s.AuthenticationService - Tokens generated for user [552].

@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.util.NoSuchElementException;
 
 @Service
@@ -24,7 +25,9 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
+
     public LoginResponse login(LoginRequest request) {
+
         logger.info("Attempting to authenticate user with email: [{}]", request.getEmail());
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
