@@ -1,25 +1,50 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError  } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authToken = localStorage.getItem('accessToken');
-    console.log('Auth Token:', authToken); // Logovanje tokena
+  constructor(private authService: AuthService, private router: Router) {}
 
-    if (authToken) {
-      // Kloniranje zahteva i dodavanje zaglavlja
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${authToken}`
-        }
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = this.authService.getAccessToken();
+    
+    // Clone the request and add the access token to the headers
+    let authReq = req;
+    if (token) {
+      authReq = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` }
       });
-      console.log('Sending request with new headers:', request); // Logovanje modifikovanog zahteva
-    } else {
-      console.log('Sending request without auth token:', request); // Logovanje zahteva bez tokena
     }
 
-    return next.handle(request);
+    return next.handle(authReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          // Access token expired, try to refresh it
+          return this.authService.refreshToken().pipe(
+            switchMap((newAccessToken: string) => {
+              if (newAccessToken) {
+                // Retry the failed request with the new access token
+                const newAuthReq = req.clone({
+                  setHeaders: { Authorization: `Bearer ${newAccessToken}` }
+                });
+                return next.handle(newAuthReq);
+              } else {
+                // If refresh token failed, log out and redirect to login
+                this.authService.logout();
+                this.router.navigate(['/login']);
+                return throwError(error);
+              }
+            })
+          );
+        }
+
+        // If the error is not 401, throw it back
+        return throwError(error);
+      })
+    );
   }
 }

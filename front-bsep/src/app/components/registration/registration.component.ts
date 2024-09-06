@@ -35,6 +35,9 @@ export class RegistrationComponent {
   }
 
   save(form: NgForm) {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    
     if (form.invalid) {
       return;
     }
@@ -70,9 +73,13 @@ export class RegistrationComponent {
         }
       },
       (error) => {
-        console.error(error);
+        console.error("Error occurred:", error);
+        console.log("Error status: ", error.status);
+        console.log("Error message: ", error.message);
+        console.log("Error headers: ", error.headers);
         alert('Unsuccessful registration. ' + error.message);
       }
+      
     );
 
     

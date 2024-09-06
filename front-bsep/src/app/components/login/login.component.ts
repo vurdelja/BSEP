@@ -75,7 +75,7 @@ export class LoginComponent {
             console.log('Navigating to user profile');
             const userId = response.userId; // Assume the response contains the user's ID
             // Navigate to the user profile page with user ID
-            this.router.navigate([`/user-profile/${userId}`]); 
+            this.router.navigate([`/protected`]); 
         },
         error => {
             console.error('Login failed:', error);

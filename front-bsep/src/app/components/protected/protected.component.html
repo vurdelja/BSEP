@@ -1,0 +1,14 @@
+<div>
+    <h1>Zaštićena stranica</h1>
+    <p>Ova stranica je dostupna samo korisnicima sa važećim tokenom.</p>
+  
+    <h2>Tokeni:</h2>
+    <p><strong>Access Token:</strong> {{ accessToken }}</p>
+    <p><strong>Refresh Token:</strong> {{ refreshToken }}</p>
+  
+    <h2>Opcije za testiranje:</h2>
+    <button (click)="refreshAccessToken()">Ručni refresh tokena</button>
+  
+    <h3>{{ message }}</h3>
+  </div>
+  

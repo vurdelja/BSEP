@@ -14,6 +14,7 @@ import { RefreshTokenDialogComponent } from './refresh-token-dialog/refresh-toke
 import { UserProfileComponent } from './user-profile/user-profile/user-profile.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ProtectedComponent } from './components/protected/protected.component';
 
 
 
@@ -26,7 +27,8 @@ import { QRCodeModule } from 'angularx-qrcode';
     CustomCaptchaComponent,
     ProfilEditComponent,
     UserProfileComponent,
-    RefreshTokenDialogComponent
+    RefreshTokenDialogComponent,
+    ProtectedComponent
   ],
   imports: [
     BrowserModule,
