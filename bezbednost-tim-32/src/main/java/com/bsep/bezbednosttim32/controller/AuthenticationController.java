@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-
 @RestController
 @RequestMapping("/bsep/auth")
 @RequiredArgsConstructor
@@ -24,6 +23,7 @@ public class AuthenticationController {
 
     private final AuthenticationService service;
     private final RegistrationService registrationService;
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginRequest request) {
         try {
@@ -35,11 +35,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<LoginResponse> refreshToken(
-            @RequestBody Map<String, String> request
-    ) {
+    public ResponseEntity<LoginResponse> refreshToken(@RequestBody Map<String, String> request) {
         String refreshToken = request.get("refreshToken");
-        logger.info("Refresh token request received");
         return ResponseEntity.ok(service.refreshAccessToken(refreshToken));
     }
 
@@ -54,7 +51,6 @@ public class AuthenticationController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }
         } catch (Exception e) {
-            logger.error("Registration failed", e); // Log the exception for debugging
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("status", "error");
             errorResponse.put("message", "Registration failed: " + e.getMessage());

@@ -8,7 +8,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @SpringBootApplication
-public class BezbednostTim32Application {
+public class
+BezbednostTim32Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BezbednostTim32Application.class, args);

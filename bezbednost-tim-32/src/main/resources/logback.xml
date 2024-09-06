@@ -1,32 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <!-- Define an appender -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <!-- Define the log message format -->
-        <encoder>
-            <pattern>%date{yyyy-MM-dd HH:mm:ss} - %level - [%thread] - %logger{10} - %msg%n</pattern>
-        </encoder>
-    </appender>
 
-    <!-- Define a file-based appender -->
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/myapp.log</file>
+    <!-- Definiši appender za logovanje u fajl sa rotacijom -->
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Naziv glavnog log fajla -->
+        <file>logs/app.log</file>
+
+        <!-- Politika rotacije fajla po vremenu i veličini -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- daily rollover with a history of 30 days -->
-            <fileNamePattern>logs/myapp-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- Svakodnevna rotacija sa datumom u nazivu fajla -->
+            <fileNamePattern>logs/app-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- Maksimalno čuvanje 30 starih log fajlova -->
             <maxHistory>30</maxHistory>
+            <!-- Maksimalna veličina jednog log fajla pre rotacije -->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
 
+        <!-- Format log poruka -->
         <encoder>
-            <pattern>%date{yyyy-MM-dd HH:mm:ss} - %level - [%thread] - %logger{10} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- Set the root logging level and add appenders -->
-    <root level="INFO">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
+    <!-- Koristi FILE appender kao glavni root appender -->
+    <root level="info">
+        <appender-ref ref="ROLLING_FILE" />
     </root>
+
 </configuration>
