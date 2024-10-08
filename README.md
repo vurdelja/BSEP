@@ -4,5 +4,5 @@
  Osnovna namena aplikacije je vođenje evidencije o zaposlenima, trenutno aktivnim i prethodnim klijentima, 
  kao i svim događajima od bezbednosnog značaja u okviru sistema.
 
- Backend: Java
- Frontend: TypeScript, HTML, CSS
+ Backend: Java Springboot
+ Frontend: Angular
